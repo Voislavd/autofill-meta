@@ -1,6 +1,14 @@
 import { useState, useRef, useEffect } from 'react'
 import './autofill.css'
 
+// Import icons
+import databaseIcon from '../../assets/icons/icon-database.png'
+import textFieldIcon from '../../assets/icons/text-field-icon.png'
+import mediaIcon from '../../assets/icons/media-icon.png'
+import tableIcon from '../../assets/icons/table-icon.png'
+import chevronDown from '../../assets/icons/chevron-down.png'
+import chevronRight from '../../assets/icons/chevron-right.png'
+
 // Mock data sources
 const DATA_SOURCES = [
   { id: 'benefits-hris', name: 'Benefits HRIS One Digital' },
@@ -71,14 +79,12 @@ export default function FieldsSchemaSection({
           onClick={() => setIsDropdownOpen(!isDropdownOpen)}
         >
           <span className="source-icon">
-            <svg width="20" height="20" viewBox="0 0 20 20" fill="none">
-              <rect x="2" y="2" width="16" height="4" rx="1" fill="currentColor"/>
-              <rect x="2" y="8" width="16" height="4" rx="1" fill="currentColor" opacity="0.6"/>
-              <rect x="2" y="14" width="16" height="4" rx="1" fill="currentColor" opacity="0.3"/>
-            </svg>
+            <img src={databaseIcon} alt="" />
           </span>
           <span className="source-name">{selectedSource.name}</span>
-          <span className={`source-chevron ${isDropdownOpen ? 'open' : ''}`}>⌄</span>
+          <span className={`source-chevron ${isDropdownOpen ? 'open' : ''}`}>
+            <img src={chevronDown} alt="" />
+          </span>
         </button>
         
         {isDropdownOpen && (
@@ -93,11 +99,7 @@ export default function FieldsSchemaSection({
                 }}
               >
                 <span className="source-option-icon">
-                  <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-                    <rect x="2" y="2" width="12" height="3" rx="1" fill="currentColor"/>
-                    <rect x="2" y="6" width="12" height="3" rx="1" fill="currentColor" opacity="0.6"/>
-                    <rect x="2" y="10" width="12" height="3" rx="1" fill="currentColor" opacity="0.3"/>
-                  </svg>
+                  <img src={databaseIcon} alt="" />
                 </span>
                 <span className="source-option-name">{source.name}</span>
                 {selectedSourceId === source.id && (
@@ -114,7 +116,9 @@ export default function FieldsSchemaSection({
         className="schema-category-card"
         onClick={() => onCategoryClick?.('fields')}
       >
-        <span className="category-icon">T</span>
+        <span className="category-icon">
+          <img src={textFieldIcon} alt="" />
+        </span>
         <span className="category-name">Fields</span>
         <span className={`category-count ${fieldsUnmapped > 0 ? 'unmapped' : 'complete'}`}>
           {fieldsUnmapped > 0 ? (
@@ -126,7 +130,9 @@ export default function FieldsSchemaSection({
             '✓ All mapped'
           )}
         </span>
-        <span className="category-chevron">›</span>
+        <span className="category-chevron">
+          <img src={chevronRight} alt="" />
+        </span>
       </button>
 
       {/* Media Card */}
@@ -134,7 +140,9 @@ export default function FieldsSchemaSection({
         className="schema-category-card"
         onClick={() => onCategoryClick?.('media')}
       >
-        <span className="category-icon">🖼</span>
+        <span className="category-icon">
+          <img src={mediaIcon} alt="" />
+        </span>
         <span className="category-name">Media</span>
         <span className={`category-count ${mediaUnmapped > 0 ? 'unmapped' : 'complete'}`}>
           {mediaUnmapped > 0 ? (
@@ -146,7 +154,9 @@ export default function FieldsSchemaSection({
             '✓ All mapped'
           )}
         </span>
-        <span className="category-chevron">›</span>
+        <span className="category-chevron">
+          <img src={chevronRight} alt="" />
+        </span>
       </button>
 
       {/* Tables Card */}
@@ -154,7 +164,9 @@ export default function FieldsSchemaSection({
         className="schema-category-card"
         onClick={() => onCategoryClick?.('tables')}
       >
-        <span className="category-icon">⊞</span>
+        <span className="category-icon">
+          <img src={tableIcon} alt="" />
+        </span>
         <span className="category-name">Tables</span>
         <span className={`category-count ${tablesUnmapped > 0 ? 'unmapped' : 'complete'}`}>
           {tablesUnmapped > 0 ? (
@@ -166,16 +178,11 @@ export default function FieldsSchemaSection({
             '✓ All mapped'
           )}
         </span>
-        <span className="category-chevron">›</span>
+        <span className="category-chevron">
+          <img src={chevronRight} alt="" />
+        </span>
       </button>
 
-      {/* View All Button */}
-      <button 
-        className="view-all-mappings-btn"
-        onClick={() => onViewAllClick?.()}
-      >
-        View all mappings
-      </button>
     </div>
   )
 }
