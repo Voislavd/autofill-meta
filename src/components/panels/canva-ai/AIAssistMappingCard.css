@@ -1,11 +1,18 @@
 .ai-assist-mapping-card {
   display: flex;
-  flex-direction: column;
-  gap: 12px;
+  width: 328px;
   padding: 16px;
-  background: linear-gradient(135deg, rgba(3, 165, 171, 0.08) 0%, rgba(139, 61, 255, 0.08) 100%);
-  border: 1px solid rgba(3, 165, 171, 0.15);
-  border-radius: 12px;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 8px;
+  border-radius: 8px;
+  border: 1px solid #00C4CC;
+  background: rgba(205, 181, 240, 0.34);
+}
+
+.ai-mapping-icon {
+  width: 20px;
+  height: 20px;
 }
 
 .ai-assist-mapping-card.complete {
