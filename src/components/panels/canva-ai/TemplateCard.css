@@ -21,12 +21,13 @@
 
 .map-template-btn {
   display: flex;
+  height: 40px;
+  padding: 8px 12px;
   align-items: center;
-  gap: 6px;
-  padding: 8px 16px;
-  background: white;
-  border: 1px solid rgba(57, 76, 96, 0.15);
+  gap: 4px;
   border-radius: 9999px;
+  border: 1px solid rgba(53, 71, 90, 0.20);
+  background: transparent;
   font-size: 14px;
   font-weight: 500;
   color: var(--text-primary);
@@ -36,9 +37,11 @@
 
 .map-template-btn:hover {
   background: rgba(57, 76, 96, 0.04);
-  border-color: rgba(57, 76, 96, 0.25);
+  border-color: rgba(53, 71, 90, 0.30);
 }
 
-.map-template-btn svg {
+.map-template-icon {
+  width: 20px;
+  height: 20px;
   flex-shrink: 0;
 }
