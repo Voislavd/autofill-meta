@@ -89,7 +89,12 @@ export default function TemplatePreview({
   schema,
   isMarketerMode = false,
   highlightedElementId,
-  isApplied = false
+  isApplied = false,
+  isDraggingField = false,
+  dragOverElement,
+  onElementDragOver,
+  onElementDragLeave,
+  onElementDrop
 }) {
   const [popoverState, setPopoverState] = useState({
     isOpen: false,
@@ -165,6 +170,11 @@ export default function TemplatePreview({
             isMarketerMode={isMarketerMode}
             highlightedElementId={highlightedElementId}
             isApplied={isApplied}
+            isDraggingField={isDraggingField}
+            dragOverElement={dragOverElement}
+            onElementDragOver={onElementDragOver}
+            onElementDragLeave={onElementDragLeave}
+            onElementDrop={onElementDrop}
           />
         ))}
       </div>

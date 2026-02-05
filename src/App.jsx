@@ -22,6 +22,9 @@ export default function App() {
   
   // Canva AI mapping state
   const [canvaAIMappingMode, setCanvaAIMappingMode] = useState(false)
+  
+  // Drag and drop state
+  const [isDraggingField, setIsDraggingField] = useState(false)
 
   const handleSidebarClick = (panelId) => {
     if (activePanel === panelId) {
@@ -127,6 +130,8 @@ export default function App() {
             onFieldUnmap={handleFieldUnmap}
             selectedPageIndex={selectedPageIndex}
             onPageSelect={setSelectedPageIndex}
+            onFieldDragStart={() => setIsDraggingField(true)}
+            onFieldDragEnd={() => setIsDraggingField(false)}
           />
         ) : isAutofillPanel ? (
           <AutofillPanel
@@ -161,6 +166,7 @@ export default function App() {
         schema={SCHEMA}
         highlightedElementId={highlightedElementId}
         isApplied={isApplied}
+        isDraggingField={isDraggingField}
       />
     </div>
   )

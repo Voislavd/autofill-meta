@@ -15,7 +15,9 @@ export default function CanvaAIPanel({
   onFieldMap,
   onFieldUnmap,
   selectedPageIndex = 0,
-  onPageSelect
+  onPageSelect,
+  onFieldDragStart,
+  onFieldDragEnd
 }) {
   // View state: 'chat' | 'mapping'
   const [view, setView] = useState('chat')
@@ -286,6 +288,8 @@ export default function CanvaAIPanel({
           onSave={handleSaveMapping}
           selectedPageIndex={selectedPageIndex}
           onPageSelect={onPageSelect}
+          onFieldDragStart={onFieldDragStart}
+          onFieldDragEnd={onFieldDragEnd}
         />
       )}
     </div>

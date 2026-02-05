@@ -733,6 +733,48 @@
   outline-color: var(--purple-accent);
 }
 
+/* ==================== DRAG AND DROP ==================== */
+
+.selectable-element.can-drop {
+  outline: 2px dashed rgba(139, 61, 255, 0.4);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+.selectable-element.can-drop.drag-over {
+  outline: 2px solid var(--purple-accent);
+  background: rgba(139, 61, 255, 0.1);
+  box-shadow: 0 0 20px rgba(139, 61, 255, 0.3);
+}
+
+.drop-indicator {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(139, 61, 255, 0.15);
+  border-radius: 4px;
+  pointer-events: none;
+}
+
+.drop-indicator span {
+  background: var(--purple-accent);
+  color: white;
+  padding: 6px 12px;
+  border-radius: 4px;
+  font-size: 12px;
+  font-weight: 500;
+  box-shadow: 0 4px 12px rgba(139, 61, 255, 0.3);
+}
+
+/* Editor drop target mode */
+.editor-area.is-drop-target .canvas-container {
+  outline: 2px dashed rgba(139, 61, 255, 0.3);
+  outline-offset: -4px;
+  border-radius: 8px;
+}
+
 /* ==================== FIELD POPOVER ==================== */
 
 .field-popover {

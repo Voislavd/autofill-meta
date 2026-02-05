@@ -1,3 +1,4 @@
+import { useState } from 'react'
 import './EditorArea.css'
 import Toolbar from './Toolbar'
 import Canvas from './Canvas'
@@ -16,10 +17,28 @@ export default function EditorArea({
   schema,
   isMarketerMode = false,
   highlightedElementId,
-  isApplied = false
+  isApplied = false,
+  isDraggingField = false
 }) {
+  const [dragOverElement, setDragOverElement] = useState(null)
+
+  const handleElementDragOver = (elementId) => {
+    setDragOverElement(elementId)
+  }
+
+  const handleElementDragLeave = () => {
+    setDragOverElement(null)
+  }
+
+  const handleElementDrop = (elementId, fieldData) => {
+    setDragOverElement(null)
+    if (fieldData && fieldData.fieldId) {
+      onFieldMap(elementId, fieldData.fieldId)
+    }
+  }
+
   return (
-    <main className={`editor-area ${isPanelOpen ? '' : 'panel-closed'}`}>
+    <main className={`editor-area ${isPanelOpen ? '' : 'panel-closed'} ${isDraggingField ? 'is-drop-target' : ''}`}>
       {!showTemplatePreview && <Toolbar />}
       <div className="canvas-container">
         {showTemplatePreview ? (
@@ -35,6 +54,11 @@ export default function EditorArea({
             isMarketerMode={isMarketerMode}
             highlightedElementId={highlightedElementId}
             isApplied={isApplied}
+            isDraggingField={isDraggingField}
+            dragOverElement={dragOverElement}
+            onElementDragOver={handleElementDragOver}
+            onElementDragLeave={handleElementDragLeave}
+            onElementDrop={handleElementDrop}
           />
         ) : (
           <Canvas />

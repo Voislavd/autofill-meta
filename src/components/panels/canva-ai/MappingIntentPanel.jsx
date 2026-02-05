@@ -14,7 +14,9 @@ export default function MappingIntentPanel({
   onBack,
   onSave,
   selectedPageIndex = 0,
-  onPageSelect
+  onPageSelect,
+  onFieldDragStart,
+  onFieldDragEnd
 }) {
   const [aiMappingState, setAiMappingState] = useState('idle') // 'idle' | 'analyzing' | 'complete'
   const [subView, setSubView] = useState('overview') // 'overview' | 'field-list'
@@ -97,6 +99,8 @@ export default function MappingIntentPanel({
           mappings={mappings}
           template={template}
           onBack={handleSubViewBack}
+          onFieldDragStart={onFieldDragStart}
+          onFieldDragEnd={onFieldDragEnd}
         />
       </div>
     )

@@ -1,5 +1,9 @@
-import { useState } from 'react'
+import { useState, useRef, useEffect } from 'react'
 import './autofill.css'
+import textFieldIcon from '../../assets/icons/text-field-icon.png'
+import mediaIcon from '../../assets/icons/media-icon.png'
+import tableIcon from '../../assets/icons/table-icon.png'
+import searchIcon from '../../assets/icons/search-icon.png'
 
 export default function FieldListView({ 
   category, // 'fields', 'media', or 'tables'
@@ -7,9 +11,13 @@ export default function FieldListView({
   mappings = {},
   template,
   onBack,
-  onFieldClick
+  onFieldClick,
+  onFieldDragStart,
+  onFieldDragEnd
 }) {
   const [searchQuery, setSearchQuery] = useState('')
+  const [draggingItem, setDraggingItem] = useState(null)
+  const dragPreviewRef = useRef(null)
 
   // Get items based on category
   const getItems = () => {
@@ -56,19 +64,111 @@ export default function FieldListView({
   // Get icon for field type
   const getTypeIcon = (type) => {
     switch (type) {
-      case 'image': return '🖼'
-      case 'table': return '⊞'
-      default: return 'T'
+      case 'image': return mediaIcon
+      case 'table': return tableIcon
+      default: return textFieldIcon
     }
   }
 
   const getCategoryTitle = () => {
     switch (category) {
-      case 'fields': return 'Text Fields'
+      case 'fields': return 'Fields'
       case 'media': return 'Media'
       case 'tables': return 'Tables'
       default: return 'Fields'
     }
+  }
+
+  // Split items into mapped and unmapped
+  const unmappedItems = filteredItems.filter(item => !getMappingInfo(item.id))
+  const mappedItems = filteredItems.filter(item => getMappingInfo(item.id))
+
+  // Drag handlers
+  const handleDragStart = (e, item) => {
+    setDraggingItem(item)
+    
+    // Create custom drag image
+    const dragPreview = document.createElement('div')
+    dragPreview.className = 'field-drag-preview'
+    dragPreview.innerHTML = `
+      <div class="field-drag-preview-header">
+        <span class="field-drag-preview-icon">
+          <img src="${getTypeIcon(item.fieldType)}" alt="" />
+        </span>
+        <span class="field-drag-preview-label">${item.label}</span>
+      </div>
+      ${item.sampleValue ? `<span class="field-drag-preview-sample">${item.sampleValue}</span>` : ''}
+    `
+    document.body.appendChild(dragPreview)
+    dragPreviewRef.current = dragPreview
+    
+    // Position off-screen initially
+    dragPreview.style.position = 'fixed'
+    dragPreview.style.top = '-1000px'
+    dragPreview.style.left = '-1000px'
+    
+    e.dataTransfer.setDragImage(dragPreview, 160, 40)
+    e.dataTransfer.setData('application/json', JSON.stringify({
+      fieldId: item.id,
+      fieldLabel: item.label,
+      fieldType: item.fieldType,
+      sampleValue: item.sampleValue
+    }))
+    e.dataTransfer.effectAllowed = 'copy'
+    
+    // Notify parent
+    onFieldDragStart?.(item)
+  }
+
+  const handleDragEnd = (e) => {
+    setDraggingItem(null)
+    
+    // Clean up drag preview
+    if (dragPreviewRef.current) {
+      document.body.removeChild(dragPreviewRef.current)
+      dragPreviewRef.current = null
+    }
+    
+    onFieldDragEnd?.()
+  }
+
+  // Render a field item
+  const renderFieldItem = (item, isMapped) => {
+    const mappingInfo = getMappingInfo(item.id)
+    
+    return (
+      <div 
+        key={item.id} 
+        className={`field-list-item ${isMapped ? 'is-mapped' : ''} ${draggingItem?.id === item.id ? 'is-dragging' : ''}`}
+        onClick={() => onFieldClick?.(item)}
+        draggable={!isMapped}
+        onDragStart={(e) => handleDragStart(e, item)}
+        onDragEnd={handleDragEnd}
+      >
+        <div className="field-list-item-header">
+          <span className="field-list-icon">
+            <img src={getTypeIcon(item.fieldType)} alt="" />
+          </span>
+          <span className="field-list-label">{item.label}</span>
+          <span className="field-list-menu">
+            {isMapped ? (
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <path d="M4 8C4 8 6 11 8 11C10 11 12 5 12 5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+              </svg>
+            ) : (
+              <svg width="16" height="16" viewBox="0 0 16 16" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <circle cx="8" cy="3" r="1.5" fill="currentColor"/>
+                <circle cx="8" cy="8" r="1.5" fill="currentColor"/>
+                <circle cx="8" cy="13" r="1.5" fill="currentColor"/>
+              </svg>
+            )}
+          </span>
+        </div>
+        {item.sampleValue && (
+          <span className="field-list-sample">{item.sampleValue}</span>
+        )}
+      </div>
+    )
   }
 
   return (
@@ -88,13 +188,23 @@ export default function FieldListView({
       <div className="field-list-body">
         {/* Search */}
         <div className="field-list-search">
-          <span className="search-icon">🔍</span>
+          <span className="search-icon">
+            <img src={searchIcon} alt="" />
+          </span>
           <input
             type="text"
-            placeholder={`Search ${category}...`}
+            placeholder="Search fields..."
             value={searchQuery}
             onChange={(e) => setSearchQuery(e.target.value)}
           />
+        </div>
+
+        {/* Drag and Drop Instruction */}
+        <div className="drag-drop-instruction">
+          <svg width="20" height="20" viewBox="0 0 20 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M10 3L10 17M10 3L6 7M10 3L14 7" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
+          </svg>
+          <span>Drag and Drop to Map</span>
         </div>
 
         {/* List */}
@@ -102,32 +212,23 @@ export default function FieldListView({
           {filteredItems.length === 0 ? (
             <div className="field-list-empty">No {category} found</div>
           ) : (
-            filteredItems.map(item => {
-              const mappingInfo = getMappingInfo(item.id)
-              
-              return (
-                <div 
-                  key={item.id} 
-                  className={`field-list-item ${mappingInfo ? 'is-mapped' : ''}`}
-                  onClick={() => onFieldClick?.(item)}
-                >
-                  <span className="field-list-icon">{getTypeIcon(item.fieldType)}</span>
-                  <div className="field-list-info">
-                    <span className="field-list-label">{item.label}</span>
-                    {item.sampleValue && (
-                      <span className="field-list-sample">{item.sampleValue}</span>
-                    )}
-                  </div>
-                  {mappingInfo ? (
-                    <span className="field-list-mapping">
-                      Page {mappingInfo.pageNumber}
-                    </span>
-                  ) : (
-                    <span className="field-list-unmapped">Unmapped</span>
-                  )}
+            <>
+              {/* Unmapped Section */}
+              {unmappedItems.length > 0 && (
+                <div className="field-list-section">
+                  <h4 className="field-list-section-title">Unmapped</h4>
+                  {unmappedItems.map(item => renderFieldItem(item, false))}
                 </div>
-              )
-            })
+              )}
+
+              {/* Mapped Section */}
+              {mappedItems.length > 0 && (
+                <div className="field-list-section">
+                  <h4 className="field-list-section-title">Mapped</h4>
+                  {mappedItems.map(item => renderFieldItem(item, true))}
+                </div>
+              )}
+            </>
           )}
         </div>
       </div>

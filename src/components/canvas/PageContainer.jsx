@@ -14,7 +14,12 @@ export default function PageContainer({
   onPageSelect,
   isMarketerMode = false,
   highlightedElementId,
-  isApplied = false
+  isApplied = false,
+  isDraggingField = false,
+  dragOverElement,
+  onElementDragOver,
+  onElementDragLeave,
+  onElementDrop
 }) {
   const getFieldLabel = (fieldId) => {
     const field = schema.fields.find(f => f.id === fieldId) ||
@@ -47,16 +52,43 @@ export default function PageContainer({
     onElementUnmap?.(elementId)
   }
 
+  // Handle drag over for drop targets
+  const handleDragOver = (e, elementId) => {
+    e.preventDefault()
+    e.dataTransfer.dropEffect = 'copy'
+    onElementDragOver?.(elementId)
+  }
+
+  const handleDragLeave = (e) => {
+    e.preventDefault()
+    onElementDragLeave?.()
+  }
+
+  const handleDrop = (e, elementId) => {
+    e.preventDefault()
+    try {
+      const data = JSON.parse(e.dataTransfer.getData('application/json'))
+      onElementDrop?.(elementId, data)
+    } catch (err) {
+      console.error('Drop error:', err)
+    }
+  }
+
   // Render a selectable element
   const SelectableElement = ({ element, children, className = '' }) => {
     const isMapped = !!mappings[element.id]
     const isHighlighted = highlightedElementId === element.id
+    const isDragOver = dragOverElement === element.id
     const canSelect = isClickToMapMode || isMapped
+    const canDrop = isDraggingField && !isMapped
 
     return (
       <div
-        className={`selectable-element ${className} ${canSelect ? 'can-select' : ''} ${isMapped ? 'is-mapped' : ''} ${isHighlighted ? 'is-highlighted' : ''} ${isApplied && isMapped ? 'is-applied' : ''}`}
+        className={`selectable-element ${className} ${canSelect ? 'can-select' : ''} ${isMapped ? 'is-mapped' : ''} ${isHighlighted ? 'is-highlighted' : ''} ${isApplied && isMapped ? 'is-applied' : ''} ${canDrop ? 'can-drop' : ''} ${isDragOver ? 'drag-over' : ''}`}
         onClick={(e) => canSelect && handleElementClick(element, e)}
+        onDragOver={(e) => canDrop && handleDragOver(e, element.id)}
+        onDragLeave={handleDragLeave}
+        onDrop={(e) => canDrop && handleDrop(e, element.id)}
       >
         {children}
         {/* Show mapped badge on top of element */}
@@ -71,6 +103,12 @@ export default function PageContainer({
             >
               −
             </button>
+          </div>
+        )}
+        {/* Show drop indicator when dragging */}
+        {canDrop && isDragOver && (
+          <div className="drop-indicator">
+            <span>Drop to map</span>
           </div>
         )}
       </div>
