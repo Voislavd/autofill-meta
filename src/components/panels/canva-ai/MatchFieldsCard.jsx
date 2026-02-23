@@ -37,7 +37,7 @@ export default function MatchFieldsCard({ state, matchedCount, totalCount, onEdi
             Edit matching
           </button>
           <button className="match-fields-btn primary" onClick={onSave}>
-            Continue
+            Create design
           </button>
         </div>
       </div>

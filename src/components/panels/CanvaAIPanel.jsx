@@ -77,7 +77,7 @@ export default function CanvaAIPanel({
       // Add AI response with template card
       setMessages(prev => [...prev, {
         type: 'ai',
-        text: "I found your brand template. You can generate a new design with AI, or match fields to connect your data directly to this template.",
+        text: "I found your brand template. There are two ways I can help:",
         template: suggestedTemplate
       }])
     }, 1500)
