@@ -92,7 +92,7 @@ export default function CreateConnector({
         <div className="fields-header">
           <label className="section-label">Fields ({mappedItems.length})</label>
           <button className="edit-mappings-link" onClick={onEditMappings}>
-            Edit Mappings
+            Edit matching
           </button>
         </div>
 
@@ -114,7 +114,7 @@ export default function CreateConnector({
             ))
           ) : (
             <div className="field-check-item empty">
-              <span className="field-check-label">No fields mapped yet</span>
+              <span className="field-check-label">No fields matched yet</span>
             </div>
           )}
         </div>

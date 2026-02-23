@@ -35,7 +35,7 @@ export default function MappedTemplateDetail({
       <div className="mapping-status-card success">
         <div className="status-icon">✓</div>
         <div className="status-content">
-          <span className="status-title">Mappings configured</span>
+          <span className="status-title">Fields matched</span>
           <span className="status-desc">{totalMapped} fields connected to data source</span>
         </div>
       </div>
@@ -109,7 +109,7 @@ export default function MappedTemplateDetail({
 
       {/* Edit Button */}
       <button className="edit-mappings-btn" onClick={onEditMappings}>
-        Edit mappings
+        Edit matching
       </button>
     </div>
   )

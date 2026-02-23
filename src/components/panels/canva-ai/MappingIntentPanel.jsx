@@ -16,9 +16,10 @@ export default function MappingIntentPanel({
   selectedPageIndex = 0,
   onPageSelect,
   onFieldDragStart,
-  onFieldDragEnd
+  onFieldDragEnd,
+  initialAiMappingState
 }) {
-  const [aiMappingState, setAiMappingState] = useState('idle') // 'idle' | 'analyzing' | 'complete'
+  const [aiMappingState, setAiMappingState] = useState(initialAiMappingState || 'idle') // 'idle' | 'analyzing' | 'complete'
   const [subView, setSubView] = useState('overview') // 'overview' | 'field-list'
   const [selectedCategory, setSelectedCategory] = useState(null)
 
@@ -130,7 +131,7 @@ export default function MappingIntentPanel({
             <path d="M12.5 15L7.5 10L12.5 5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
           </svg>
         </button>
-        <span className="mapping-header-title">Map a template</span>
+        <span className="mapping-header-title">Match fields</span>
       </div>
 
       {/* Page Thumbnails */}
@@ -145,7 +146,7 @@ export default function MappingIntentPanel({
 
       {/* Mapping Tools Section */}
       <div className="mapping-intent-tools">
-        <h4 className="mapping-section-label">Mapping tools</h4>
+        <h4 className="mapping-section-label">Matching tools</h4>
         <AIAssistMappingCard
           state={aiMappingState}
           onMapWithAI={handleMapWithAI}
@@ -170,7 +171,7 @@ export default function MappingIntentPanel({
           onClick={onSave}
           disabled={!hasMappings}
         >
-          Save mapping
+          Save matching
         </button>
       </div>
     </div>

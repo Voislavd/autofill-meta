@@ -48,21 +48,21 @@ export default function AdminJobPanel({
         {job.id === 'review-mappings' && (
           <>
             <div className="admin-section">
-              <h4 className="section-label">Templates with Mappings</h4>
+              <h4 className="section-label">Templates with matched fields</h4>
               <div className="mapping-review-list">
                 <div className="mapping-item">
                   <span className="mapping-name">Employee Benefits Guide</span>
-                  <span className="mapping-count">3 fields mapped</span>
+                  <span className="mapping-count">3 fields matched</span>
                   <span className="mapping-status ok">✓</span>
                 </div>
                 <div className="mapping-item">
                   <span className="mapping-name">Summary Sheet</span>
-                  <span className="mapping-count">5 fields mapped</span>
+                  <span className="mapping-count">5 fields matched</span>
                   <span className="mapping-status ok">✓</span>
                 </div>
                 <div className="mapping-item warning">
                   <span className="mapping-name">Rates Sheet</span>
-                  <span className="mapping-count">2 unmapped</span>
+                  <span className="mapping-count">2 unmatched</span>
                   <span className="mapping-status warn">!</span>
                 </div>
               </div>

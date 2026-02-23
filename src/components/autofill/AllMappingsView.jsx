@@ -72,7 +72,7 @@ export default function AllMappingsView({
             <path d="M12.5 15L7.5 10L12.5 5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
           </svg>
         </button>
-        <h3 className="all-mappings-title">All Mappings</h3>
+        <h3 className="all-mappings-title">All matched fields</h3>
         <span className="all-mappings-count">{totalMappings} total</span>
       </div>
 
@@ -81,8 +81,8 @@ export default function AllMappingsView({
         {mappingsByPage.length === 0 ? (
           <div className="all-mappings-empty">
             <span className="empty-icon">📋</span>
-            <span className="empty-text">No mappings yet</span>
-            <span className="empty-hint">Use Click to map to start mapping fields</span>
+            <span className="empty-text">No matched fields yet</span>
+            <span className="empty-hint">Use Click to match to start matching fields</span>
           </div>
         ) : (
           mappingsByPage.map(page => (

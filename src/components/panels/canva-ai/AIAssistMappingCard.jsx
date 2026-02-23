@@ -28,7 +28,7 @@ export default function AIAssistMappingCard({ state, onMapWithAI, onCancel }) {
               <span className="ai-card-icon">
                 <img src={iconDone} alt="" className="ai-done-icon" />
               </span>
-              <span className="ai-card-title gradient">Auto-mapping complete!</span>
+              <span className="ai-card-title gradient">Auto-matching complete!</span>
             </div>
           </>
         )
@@ -39,10 +39,10 @@ export default function AIAssistMappingCard({ state, onMapWithAI, onCancel }) {
           <>
             <div className="ai-card-header">
               <img src={aiMappingIcon} alt="" className="ai-mapping-icon" />
-              <span className="ai-card-title gradient">AI Assisted Mapping</span>
+              <span className="ai-card-title gradient">AI Assisted Matching</span>
             </div>
             <button className="ai-card-btn primary" onClick={onMapWithAI}>
-              Map with AI
+              Match with AI
             </button>
           </>
         )

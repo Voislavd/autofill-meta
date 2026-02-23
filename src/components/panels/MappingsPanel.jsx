@@ -102,7 +102,7 @@ export default function MappingsPanel({
             <path d="M12.5 15L7.5 10L12.5 5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
           </svg>
         </button>
-        <h2 className="panel-nav-title">Mappings</h2>
+        <h2 className="panel-nav-title">Matched fields</h2>
         <button className="autofill-close" onClick={onClose}>×</button>
       </div>
 
@@ -154,7 +154,7 @@ export default function MappingsPanel({
       {/* Save Button */}
       <div className="mappings-save-footer">
         <button className="save-mappings-btn" onClick={onSave}>
-          Save mappings
+          Save matching
         </button>
       </div>
     </div>

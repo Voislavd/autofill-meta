@@ -5,7 +5,7 @@ import recentThumbnail from '../../assets/icons/start-recent-thumbnail.png'
 import chartThumbnail from '../../assets/icons/chart-thumbnail.png'
 import micIcon from '../../assets/icons/mic-icon.png'
 import { TEMPLATES, SCHEMA } from '../../data/sampleData'
-import { MessageList, UserMessage, AIMessage, ThinkingIndicator, TemplateCard, MappingIntentPanel } from './canva-ai'
+import { MessageList, UserMessage, AIMessage, ThinkingIndicator, TemplateCard, MappingIntentPanel, MatchFieldsCard } from './canva-ai'
 
 export default function CanvaAIPanel({ 
   onClose, 
@@ -77,7 +77,7 @@ export default function CanvaAIPanel({
       // Add AI response with template card
       setMessages(prev => [...prev, {
         type: 'ai',
-        text: "I found your brand template but it's not currently mapped. We need to map this with your data in order to produce the correct design",
+        text: "I found your brand template. You can generate a new design with AI, or match fields to connect your data directly to this template.",
         template: suggestedTemplate
       }])
     }, 1500)
@@ -91,22 +91,93 @@ export default function CanvaAIPanel({
     }
   }
 
-  // Handle map template button click
+  // Match fields state for inline compact surface
+  const [matchFieldsState, setMatchFieldsState] = useState(null) // null | 'analyzing' | 'complete'
+  const [matchedCount, setMatchedCount] = useState(0)
+  const [totalFieldCount, setTotalFieldCount] = useState(0)
+
+  // AI auto-matching logic (extracted from MappingIntentPanel)
+  const runAutoMatching = (template) => {
+    if (!onFieldMap) return
+
+    const aiMappingRules = {
+      'For xx employees': 'employee-count',
+      'Department': 'department',
+      'Start Date': 'start-date',
+      'Hero Image': 'hero-photo',
+      'Company Logo': 'company-logo',
+      'Team Photo': 'team-photo',
+      'Contact Information': 'contact-info',
+      'Job Type': 'job-type',
+      'Job Title': 'job-title',
+      'Manager Name': 'manager-name',
+      'Office Location': 'office-location',
+      'Employee Type': 'employee-type',
+      'Employee ID': 'employee-id',
+    }
+
+    let matched = 0
+    let total = 0
+
+    template.pages.forEach(page => {
+      page.elements.forEach(el => {
+        total++
+        if (el.id === 'el-1') return
+        for (const [labelPattern, fieldId] of Object.entries(aiMappingRules)) {
+          if (el.label && el.label.toLowerCase().includes(labelPattern.toLowerCase())) {
+            onFieldMap(el.id, fieldId)
+            matched++
+            break
+          }
+        }
+      })
+    })
+
+    setMatchedCount(matched)
+    setTotalFieldCount(total)
+  }
+
+  // Handle "Match fields" button click — triggers inline compact surface
   const handleMapTemplate = () => {
-    setView('mapping')
-    // Notify parent to show template preview in editor
-    if (onMappingStart && selectedTemplate) {
+    if (!selectedTemplate) return
+
+    if (onMappingStart) {
       onMappingStart(selectedTemplate)
     }
+
+    setMatchFieldsState('analyzing')
+    setMessages(prev => [...prev, {
+      type: 'match-fields',
+      state: 'analyzing'
+    }])
+
+    setTimeout(() => {
+      runAutoMatching(selectedTemplate)
+      setMatchFieldsState('complete')
+      setMessages(prev => prev.map(msg =>
+        msg.type === 'match-fields' && msg.state === 'analyzing'
+          ? { ...msg, state: 'complete' }
+          : msg
+      ))
+    }, 5000)
+  }
+
+  // Handle "Edit matching" from compact card — opens full panel
+  const handleEditMatching = () => {
+    setView('mapping')
+  }
+
+  // Handle "Generate with AI" button click — placeholder
+  const handleGenerateWithAI = () => {
+    setMessages(prev => [...prev, {
+      type: 'ai',
+      text: "Generative AI design is coming soon. For now, use Match Fields to connect your data to this template."
+    }])
   }
 
   // Handle back from mapping
   const handleBackFromMapping = () => {
     setView('chat')
-    // Notify parent to hide template preview
-    if (onMappingEnd) {
-      onMappingEnd()
-    }
   }
 
   // Designing state
@@ -114,32 +185,28 @@ export default function CanvaAIPanel({
   const [designStep, setDesignStep] = useState(0)
 
   const designSteps = [
-    'Applying data mappings',
+    'Applying matched fields',
     'Replacing text fields',
     'Inserting media',
     'Populating tables',
     'Finalizing layout'
   ]
 
-  // Handle save mapping
+  // Handle save matching
   const handleSaveMapping = () => {
-    // Start apply mode - keeps template visible but hides mapping badges
     if (onApplyStart) {
       onApplyStart()
     }
     
-    // Add success message to conversation
     setMessages(prev => [...prev, {
       type: 'ai',
-      text: "Great! I've saved the mapping. Now generating your Employee Benefits Guide..."
+      text: "Great! I've saved the matching. Now generating your Employee Benefits Guide..."
     }])
     
-    // Return to chat view and start designing animation
     setView('chat')
     setIsDesigning(true)
     setDesignStep(0)
 
-    // Animate through design steps
     const stepInterval = setInterval(() => {
       setDesignStep(prev => {
         if (prev >= designSteps.length - 1) {
@@ -150,12 +217,10 @@ export default function CanvaAIPanel({
       })
     }, 1000)
     
-    // Simulate Canva AI processing and applying data
     setTimeout(() => {
       clearInterval(stepInterval)
       setIsDesigning(false)
       
-      // Apply the data - replaces placeholders with actual values
       if (onApplyComplete) {
         onApplyComplete()
       }
@@ -242,9 +307,21 @@ export default function CanvaAIPanel({
                       <TemplateCard 
                         template={msg.template} 
                         onMapTemplate={handleMapTemplate}
+                        onGenerateWithAI={handleGenerateWithAI}
                       />
                     )}
                   </AIMessage>
+                )
+              } else if (msg.type === 'match-fields') {
+                return (
+                  <MatchFieldsCard
+                    key={index}
+                    state={matchFieldsState || msg.state}
+                    matchedCount={matchedCount}
+                    totalCount={totalFieldCount}
+                    onEditMatching={handleEditMatching}
+                    onSave={handleSaveMapping}
+                  />
                 )
               }
               return null
@@ -333,6 +410,7 @@ export default function CanvaAIPanel({
           onPageSelect={onPageSelect}
           onFieldDragStart={onFieldDragStart}
           onFieldDragEnd={onFieldDragEnd}
+          initialAiMappingState={matchFieldsState === 'complete' ? 'complete' : undefined}
         />
       )}
     </div>
