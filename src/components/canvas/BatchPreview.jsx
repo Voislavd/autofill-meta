@@ -1,4 +1,10 @@
 import './canvas-preview.css'
+import iconChevronDown from '../../assets/icons/down-chevron-canvas.png'
+import iconChevronUp from '../../assets/icons/up-chevron-canvas.png'
+import iconLock from '../../assets/icons/lock.png'
+import iconDuplicate from '../../assets/icons/Duplicate.png'
+import iconDelete from '../../assets/icons/Delete.png'
+import iconAdd from '../../assets/icons/Add.png'
 
 export default function BatchPreview({ designs }) {
   if (!designs || designs.length === 0) return null
@@ -12,12 +18,12 @@ export default function BatchPreview({ designs }) {
               <span className="page-label">Design {index + 1}</span>
               <span className="page-title-input">- {product.productName}</span>
               <div className="page-actions">
-                <button className="page-action">⌄</button>
-                <button className="page-action">⌃</button>
-                <button className="page-action">🔒</button>
-                <button className="page-action">📋</button>
-                <button className="page-action">🗑</button>
-                <button className="page-action">⊕</button>
+                <button className="page-action"><img src={iconChevronDown} alt="Move down" /></button>
+                <button className="page-action"><img src={iconChevronUp} alt="Move up" /></button>
+                <button className="page-action"><img src={iconLock} alt="Lock" /></button>
+                <button className="page-action"><img src={iconDuplicate} alt="Duplicate" /></button>
+                <button className="page-action"><img src={iconDelete} alt="Delete" /></button>
+                <button className="page-action"><img src={iconAdd} alt="Add page" /></button>
               </div>
             </div>
 
