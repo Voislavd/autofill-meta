@@ -3,6 +3,7 @@ import './EditorArea.css'
 import Toolbar from './Toolbar'
 import Canvas from './Canvas'
 import TemplatePreview from './canvas/TemplatePreview'
+import BatchPreview from './canvas/BatchPreview'
 
 export default function EditorArea({
   isPanelOpen,
@@ -21,7 +22,9 @@ export default function EditorArea({
   isInMappingMode = false,
   isDraggingField = false,
   onFieldDragEnd,
-  singlePageMode = false
+  singlePageMode = false,
+  batchDesigns = null,
+  isGenerating = false
 }) {
   const [dragOverElement, setDragOverElement] = useState(null)
 
@@ -38,38 +41,57 @@ export default function EditorArea({
     if (fieldData && fieldData.fieldId) {
       onFieldMap(elementId, fieldData.fieldId)
     }
-    // Also reset drag state when drop happens
     onFieldDragEnd?.()
+  }
+
+  const renderCanvas = () => {
+    if (isGenerating) {
+      return (
+        <div className="generating-overlay">
+          <div className="generating-spinner" />
+          <span className="generating-text">Generating designs...</span>
+          <span className="generating-subtext">Creating unique designs for each product</span>
+        </div>
+      )
+    }
+
+    if (batchDesigns) {
+      return <BatchPreview designs={batchDesigns} />
+    }
+
+    if (showTemplatePreview) {
+      return (
+        <TemplatePreview
+          template={template}
+          selectedPageIndex={selectedPageIndex}
+          onPageSelect={onPageSelect}
+          mappings={mappings}
+          onFieldMap={onFieldMap}
+          onFieldUnmap={onFieldUnmap}
+          isClickToMapMode={isClickToMapMode}
+          schema={schema}
+          isMarketerMode={isMarketerMode}
+          highlightedElementId={highlightedElementId}
+          isApplied={isApplied}
+          isInMappingMode={isInMappingMode}
+          isDraggingField={isDraggingField}
+          dragOverElement={dragOverElement}
+          onElementDragOver={handleElementDragOver}
+          onElementDragLeave={handleElementDragLeave}
+          onElementDrop={handleElementDrop}
+          singlePageMode={singlePageMode}
+        />
+      )
+    }
+
+    return <Canvas />
   }
 
   return (
     <main className={`editor-area ${isPanelOpen ? '' : 'panel-closed'}`}>
-      {!showTemplatePreview && <Toolbar />}
+      {!showTemplatePreview && !batchDesigns && !isGenerating && <Toolbar />}
       <div className="canvas-container">
-        {showTemplatePreview ? (
-          <TemplatePreview
-            template={template}
-            selectedPageIndex={selectedPageIndex}
-            onPageSelect={onPageSelect}
-            mappings={mappings}
-            onFieldMap={onFieldMap}
-            onFieldUnmap={onFieldUnmap}
-            isClickToMapMode={isClickToMapMode}
-            schema={schema}
-            isMarketerMode={isMarketerMode}
-            highlightedElementId={highlightedElementId}
-            isApplied={isApplied}
-            isInMappingMode={isInMappingMode}
-            isDraggingField={isDraggingField}
-            dragOverElement={dragOverElement}
-            onElementDragOver={handleElementDragOver}
-            onElementDragLeave={handleElementDragLeave}
-            onElementDrop={handleElementDrop}
-            singlePageMode={singlePageMode}
-          />
-        ) : (
-          <Canvas />
-        )}
+        {renderCanvas()}
       </div>
     </main>
   )

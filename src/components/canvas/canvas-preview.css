@@ -1116,3 +1116,65 @@
 .popover-disconnect:hover {
   background: #fafafa;
 }
+
+/* ==================== BATCH PREVIEW ==================== */
+.batch-preview {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+}
+
+.batch-scroll-container {
+  flex: 1;
+  overflow-y: auto;
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 32px;
+  align-items: center;
+}
+
+.batch-design-item {
+  width: 100%;
+  max-width: 600px;
+  flex-shrink: 0;
+}
+
+.batch-design-item .page-content {
+  aspect-ratio: 1 / 1;
+}
+
+/* Generating state */
+.generating-overlay {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100%;
+  gap: 16px;
+}
+
+.generating-spinner {
+  width: 40px;
+  height: 40px;
+  border: 3px solid #e0e0e0;
+  border-top-color: #8b3dff;
+  border-radius: 50%;
+  animation: spin 0.8s linear infinite;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+.generating-text {
+  font-size: 16px;
+  font-weight: 600;
+  color: var(--text-primary);
+}
+
+.generating-subtext {
+  font-size: 13px;
+  color: var(--text-secondary);
+}

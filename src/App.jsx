@@ -5,7 +5,7 @@ import ObjectPanel from './components/ObjectPanel'
 import EditorArea from './components/EditorArea'
 import AutofillPanel from './components/panels/AutofillPanel'
 import CanvaAIPanel from './components/panels/CanvaAIPanel'
-import { SCHEMA } from './data/sampleData'
+import { SCHEMA, BATCH_PRODUCTS } from './data/sampleData'
 import './App.css'
 
 export default function App() {
@@ -19,6 +19,10 @@ export default function App() {
   const [mappings, setMappings] = useState({})
   const [highlightedElementId, setHighlightedElementId] = useState(null)
   const [isApplied, setIsApplied] = useState(false)
+  
+  // Batch creation state
+  const [batchDesigns, setBatchDesigns] = useState(null)
+  const [isGenerating, setIsGenerating] = useState(false)
   
   // Canva AI state
   const [canvaAIPreviewMode, setCanvaAIPreviewMode] = useState(false)
@@ -38,20 +42,21 @@ export default function App() {
 
   const handleClosePanel = () => {
     setActivePanel(null)
-    // Reset autofill state when closing
     setAutofillView('home')
     setSelectedTemplate(null)
     setIsClickToMapMode(false)
     setIsApplied(false)
+    setBatchDesigns(null)
+    setIsGenerating(false)
   }
 
-  // Template selection handler (just sets template, view is handled by panel)
   const handleTemplateSelect = (template) => {
     setSelectedTemplate(template)
     setSelectedPageIndex(0)
-    setIsApplied(false) // Reset applied state when selecting new template
+    setIsApplied(false)
+    setBatchDesigns(null)
+    setIsGenerating(false)
 
-    // Initialize mappings from template
     const initialMappings = {}
     template.pages.forEach(page => {
       page.elements.forEach(el => {
@@ -63,14 +68,18 @@ export default function App() {
     setMappings(initialMappings)
   }
 
-  // Apply handler for Create flow
-  const handleApply = () => {
-    setIsApplied(true)
+  // Batch create handler
+  const handleApply = (productCount) => {
+    setIsGenerating(true)
+    const count = productCount || 8
+    setTimeout(() => {
+      setBatchDesigns(BATCH_PRODUCTS.slice(0, count))
+      setIsApplied(true)
+      setIsGenerating(false)
+    }, 2000)
   }
 
-  // Mapping handlers
   const handleFieldMap = (elementId, fieldId) => {
-    // Use functional setState to handle multiple rapid updates correctly
     setMappings(prev => ({ ...prev, [elementId]: fieldId }))
   }
 
@@ -80,14 +89,11 @@ export default function App() {
     setMappings(newMappings)
   }
 
-  // Highlight handler - sets element and auto-clears after animation
   const handleFieldHighlight = (elementId) => {
     setHighlightedElementId(elementId)
-    // Clear highlight after animation completes
     setTimeout(() => setHighlightedElementId(null), 1500)
   }
 
-  // Handler for Canva AI showing template preview (before matching)
   const handleCanvaAITemplatePreview = (template) => {
     setSelectedTemplate(template)
     setSelectedPageIndex(0)
@@ -95,44 +101,34 @@ export default function App() {
     setMappings({})
   }
 
-  // Handler for Canva AI entering mapping mode
   const handleCanvaAIMappingStart = (template) => {
     setSelectedTemplate(template)
     setSelectedPageIndex(0)
     setCanvaAIPreviewMode(false)
     setCanvaAIMappingMode(true)
-    
-    // Start with empty mappings - AI will populate them
     setMappings({})
   }
 
-  // Handler for Canva AI exiting mapping mode
   const handleCanvaAIMappingEnd = () => {
     setCanvaAIMappingMode(false)
   }
 
-  // Handler for Canva AI starting apply mode (after save mapping)
   const handleCanvaAIApplyStart = () => {
-    setCanvaAIMappingMode(false)  // Exit mapping mode (hides badges)
-    setCanvaAIApplyingMode(true)  // Enter applying mode (keeps preview visible)
+    setCanvaAIMappingMode(false)
+    setCanvaAIApplyingMode(true)
   }
 
-  // Handler for Canva AI completing apply
   const handleCanvaAIApplyComplete = () => {
-    setIsApplied(true)  // Show actual values instead of placeholders
+    setIsApplied(true)
   }
 
-  // Handler for Canva AI ending apply mode
   const handleCanvaAIApplyEnd = () => {
     setCanvaAIApplyingMode(false)
   }
 
-  // Panel type checks
   const isCanvaAIPanel = activePanel === 'canva-ai'
   const isAutofillPanel = activePanel === 'apps'
 
-  // Show template preview for mappings, create-connect, and mapped-detail views
-  // Also show for Canva AI when in mapping mode or applying mode
   const showTemplatePreview = (
     (isAutofillPanel && (autofillView === 'mappings' || autofillView === 'create-connect' || autofillView === 'mapped-detail')) ||
     (isCanvaAIPanel && (canvaAIPreviewMode || canvaAIMappingMode || canvaAIApplyingMode))
@@ -182,6 +178,7 @@ export default function App() {
             onFieldUnmap={handleFieldUnmap}
             onFieldHighlight={handleFieldHighlight}
             isApplied={isApplied}
+            isGenerating={isGenerating}
             onApply={handleApply}
             onFieldDragStart={() => setIsDraggingField(true)}
             onFieldDragEnd={() => setIsDraggingField(false)}
@@ -204,7 +201,9 @@ export default function App() {
         isInMappingMode={canvaAIMappingMode || (isAutofillPanel && autofillView === 'mappings')}
         isDraggingField={isDraggingField}
         onFieldDragEnd={() => setIsDraggingField(false)}
-        singlePageMode={isAutofillPanel && (autofillView === 'mappings' || autofillView === 'mapped-detail' || autofillView === 'create-connect')}
+        singlePageMode={isAutofillPanel && (autofillView === 'mappings' || autofillView === 'mapped-detail' || autofillView === 'create-connect') && !batchDesigns}
+        batchDesigns={batchDesigns}
+        isGenerating={isGenerating}
       />
     </div>
   )

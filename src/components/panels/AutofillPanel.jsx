@@ -25,6 +25,7 @@ export default function AutofillPanel({
   onFieldUnmap,
   onFieldHighlight,
   isApplied,
+  isGenerating,
   onApply,
   onFieldDragStart,
   onFieldDragEnd
@@ -121,6 +122,7 @@ export default function AutofillPanel({
             template={selectedTemplate}
             mappings={mappings}
             isApplied={isApplied}
+            isGenerating={isGenerating}
             onApply={onApply}
             onEditMappings={handleEditMappings}
             onBack={goBack}

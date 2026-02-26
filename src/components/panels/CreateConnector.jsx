@@ -7,6 +7,7 @@ export default function CreateConnector({
   template,
   mappings,
   isApplied,
+  isGenerating,
   onApply,
   onEditMappings,
   onBack,
@@ -154,11 +155,16 @@ export default function CreateConnector({
       {/* Create Button */}
       <div className="create-bottom">
         <button
-          className={`apply-btn ${isApplied ? 'applied' : ''}`}
-          onClick={onApply}
-          disabled={isApplied || mappedItems.length === 0}
+          className={`apply-btn ${isApplied ? 'applied' : ''} ${isGenerating ? 'generating' : ''}`}
+          onClick={() => onApply(productCount)}
+          disabled={isApplied || isGenerating || mappedItems.length === 0}
         >
-          {isApplied ? (
+          {isGenerating ? (
+            <>
+              <span className="btn-spinner" />
+              <span>Generating...</span>
+            </>
+          ) : isApplied ? (
             <>
               <span className="btn-icon">✓</span>
               <span>Created {productCount} designs</span>
