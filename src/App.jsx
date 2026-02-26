@@ -5,6 +5,7 @@ import ObjectPanel from './components/ObjectPanel'
 import EditorArea from './components/EditorArea'
 import AutofillPanel from './components/panels/AutofillPanel'
 import CanvaAIPanel from './components/panels/CanvaAIPanel'
+import MetaUploadPanel from './components/panels/MetaUploadPanel'
 import { SCHEMA, BATCH_PRODUCTS } from './data/sampleData'
 import './App.css'
 
@@ -31,6 +32,23 @@ export default function App() {
   
   // Drag and drop state
   const [isDraggingField, setIsDraggingField] = useState(false)
+  
+  // Meta upload panel state
+  const [showMetaUpload, setShowMetaUpload] = useState(false)
+  const [toastMessage, setToastMessage] = useState(null)
+  const [toastFading, setToastFading] = useState(false)
+
+  const showToast = (message) => {
+    setToastMessage(message)
+    setToastFading(false)
+    setTimeout(() => setToastFading(true), 2500)
+    setTimeout(() => setToastMessage(null), 2800)
+  }
+
+  const handleMetaUploaded = () => {
+    setShowMetaUpload(false)
+    showToast('Uploaded to Meta')
+  }
 
   const handleSidebarClick = (panelId) => {
     if (activePanel === panelId) {
@@ -182,9 +200,22 @@ export default function App() {
             onApply={handleApply}
             onFieldDragStart={() => setIsDraggingField(true)}
             onFieldDragEnd={() => setIsDraggingField(false)}
+            onUploadToMeta={() => setShowMetaUpload(true)}
           />
         ) : null}
       </ObjectPanel>
+      {showMetaUpload && (
+        <MetaUploadPanel
+          onClose={() => setShowMetaUpload(false)}
+          onUploaded={handleMetaUploaded}
+          designCount={batchDesigns?.length || 8}
+        />
+      )}
+      {toastMessage && (
+        <div className={`toast-container ${toastFading ? 'toast-out' : ''}`}>
+          <div className="toast">{toastMessage}</div>
+        </div>
+      )}
       <EditorArea
         isPanelOpen={activePanel !== null}
         showTemplatePreview={showTemplatePreview}

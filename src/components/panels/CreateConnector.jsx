@@ -11,7 +11,8 @@ export default function CreateConnector({
   onApply,
   onEditMappings,
   onBack,
-  onClose
+  onClose,
+  onUploadToMeta
 }) {
   const [selectedSource, setSelectedSource] = useState(DATA_SOURCES.filter(s => s.connected)[0]?.id)
   const [selectedDateRange, setSelectedDateRange] = useState('last-7')
@@ -80,7 +81,7 @@ export default function CreateConnector({
             <path d="M12.5 15L7.5 10L12.5 5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
           </svg>
         </button>
-        <h2 className="panel-nav-title">Choose a connector</h2>
+        <h2 className="panel-nav-title">Choose data</h2>
         <button className="autofill-close" onClick={onClose}>×</button>
       </div>
 
@@ -154,6 +155,11 @@ export default function CreateConnector({
 
       {/* Create Button */}
       <div className="create-bottom">
+        {isApplied && (
+          <button className="upload-meta-btn" onClick={onUploadToMeta}>
+            Upload to Meta
+          </button>
+        )}
         <button
           className={`apply-btn ${isApplied ? 'applied' : ''} ${isGenerating ? 'generating' : ''}`}
           onClick={() => onApply(productCount)}

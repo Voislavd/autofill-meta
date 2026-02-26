@@ -28,7 +28,8 @@ export default function AutofillPanel({
   isGenerating,
   onApply,
   onFieldDragStart,
-  onFieldDragEnd
+  onFieldDragEnd,
+  onUploadToMeta
 }) {
   // Local navigation stack for back button
   const [navigationStack, setNavigationStack] = useState([])
@@ -127,6 +128,7 @@ export default function AutofillPanel({
             onEditMappings={handleEditMappings}
             onBack={goBack}
             onClose={onClose}
+            onUploadToMeta={onUploadToMeta}
           />
         )
 
