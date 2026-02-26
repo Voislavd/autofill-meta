@@ -204,7 +204,7 @@ export default function App() {
         isInMappingMode={canvaAIMappingMode || (isAutofillPanel && autofillView === 'mappings')}
         isDraggingField={isDraggingField}
         onFieldDragEnd={() => setIsDraggingField(false)}
-        singlePageMode={isAutofillPanel && (autofillView === 'mappings' || autofillView === 'mapped-detail')}
+        singlePageMode={isAutofillPanel && (autofillView === 'mappings' || autofillView === 'mapped-detail' || autofillView === 'create-connect')}
       />
     </div>
   )

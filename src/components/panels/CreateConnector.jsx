@@ -1,5 +1,6 @@
 import { useState, useMemo } from 'react'
 import { DATA_SOURCES, SCHEMA, CATALOGUE_FILTERS } from '../../data/sampleData'
+import chevronDown from '../../assets/icons/chevron-down.png'
 import './panels.css'
 
 export default function CreateConnector({
@@ -46,13 +47,15 @@ export default function CreateConnector({
 
   const mappedItems = getMappedItems()
 
-  const getItemIcon = (item) => {
-    switch (item.category) {
-      case 'media': return '🖼'
-      case 'table': return '☰'
-      default: return 'Aa'
-    }
-  }
+  const fieldCount = mappedItems.filter(i => i.category === 'field').length
+  const mediaCount = mappedItems.filter(i => i.category === 'media').length
+  const tableCount = mappedItems.filter(i => i.category === 'table').length
+
+  const fieldNames = mappedItems
+    .filter(i => i.category === 'field')
+    .map(i => i.label)
+    .slice(0, 3)
+    .join(', ')
 
   const productCount = useMemo(() => {
     const dateCount = CATALOGUE_FILTERS.dateRange.find(f => f.id === selectedDateRange)?.count || 0
@@ -85,7 +88,7 @@ export default function CreateConnector({
               </option>
             ))}
           </select>
-          <span className="dropdown-chevron">▼</span>
+          <img src={chevronDown} alt="" className="dropdown-chevron-icon" />
         </div>
       </div>
 
@@ -105,7 +108,7 @@ export default function CreateConnector({
                 </option>
               ))}
             </select>
-            <span className="dropdown-chevron">▼</span>
+            <img src={chevronDown} alt="" className="dropdown-chevron-icon" />
           </div>
 
           <div className="filter-dropdown">
@@ -120,7 +123,7 @@ export default function CreateConnector({
                 </option>
               ))}
             </select>
-            <span className="dropdown-chevron">▼</span>
+            <img src={chevronDown} alt="" className="dropdown-chevron-icon" />
           </div>
 
           <div className="filter-dropdown">
@@ -135,7 +138,7 @@ export default function CreateConnector({
                 </option>
               ))}
             </select>
-            <span className="dropdown-chevron">▼</span>
+            <img src={chevronDown} alt="" className="dropdown-chevron-icon" />
           </div>
         </div>
 
@@ -144,44 +147,36 @@ export default function CreateConnector({
         </div>
       </div>
 
-      {/* Fields List */}
-      <div className="connector-section fields-section">
-        <div className="fields-header">
-          <label className="section-label">Fields ({mappedItems.length})</label>
-          <button className="edit-mappings-link" onClick={onEditMappings}>
-            Edit matching
-          </button>
-        </div>
-
-        <div className="field-check-list">
-          {mappedItems.length > 0 ? (
-            mappedItems.map((item) => (
-              <div
-                key={item.id}
-                className={`field-check-item ${isApplied ? 'applied' : ''}`}
-              >
-                <div className="field-item-content">
-                  <span className="field-item-icon">{getItemIcon(item)}</span>
-                  <span className="field-check-label">{item.label}</span>
-                </div>
-                <span className={`field-check-icon ${isApplied ? 'check-applied' : ''}`}>
-                  {isApplied ? '✓' : '○'}
-                </span>
-              </div>
-            ))
-          ) : (
-            <div className="field-check-item empty">
-              <span className="field-check-label">No fields matched yet</span>
+      {/* Fields Summary Card */}
+      <div className="connector-section">
+        <label className="section-label">Matched fields</label>
+        {mappedItems.length > 0 ? (
+          <div className="fields-summary-card" onClick={onEditMappings}>
+            <div className="fields-summary-top">
+              <span className="fields-summary-count">{mappedItems.length} fields matched</span>
+              <button className="edit-mappings-link" onClick={(e) => { e.stopPropagation(); onEditMappings() }}>
+                Edit matching
+              </button>
             </div>
-          )}
-        </div>
+            <div className="fields-summary-detail">
+              {fieldCount > 0 && <span className="fields-summary-tag">Aa {fieldCount} text</span>}
+              {mediaCount > 0 && <span className="fields-summary-tag">🖼 {mediaCount} media</span>}
+              {tableCount > 0 && <span className="fields-summary-tag">☰ {tableCount} tables</span>}
+            </div>
+            <p className="fields-summary-preview">{fieldNames}{fieldCount > 3 ? '...' : ''}</p>
+          </div>
+        ) : (
+          <div className="fields-summary-card fields-summary-empty" onClick={onEditMappings}>
+            <span className="fields-summary-count">No fields matched yet</span>
+            <button className="edit-mappings-link" onClick={(e) => { e.stopPropagation(); onEditMappings() }}>
+              Set up matching
+            </button>
+          </div>
+        )}
       </div>
 
-      {/* Create Summary + Button */}
+      {/* Create Button */}
       <div className="create-bottom">
-        <p className="create-summary">
-          This will create <strong>{productCount}</strong> designs
-        </p>
         <button
           className={`apply-btn ${isApplied ? 'applied' : ''}`}
           onClick={onApply}
