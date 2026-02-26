@@ -293,12 +293,12 @@ export const TEMPLATES = [
 export const BATCH_PRODUCTS = [
   { id: 1, productName: 'Nike Air Zoom Trail', discount: '30%', promo: 'SALE', cta: 'Shop Now', image: shoe2 },
   { id: 2, productName: 'Adidas Ultraboost 23', discount: '25%', promo: 'NEW', cta: 'Buy Now', image: shoe3 },
-  { id: 3, productName: 'Puma RS-X Reinvention', discount: '40%', promo: 'FLASH SALE', cta: 'Get Yours', image: shoe4 },
+  { id: 3, productName: 'Puma RS-X Reinvention', discount: '40%', promo: 'SALE', cta: 'Get Yours', image: shoe4 },
   { id: 4, productName: 'New Balance 990v6', discount: '15%', promo: 'LIMITED', cta: 'Order Now', image: shoe5 },
   { id: 5, productName: 'Reebok Nano X3', discount: '35%', promo: 'HOT DEAL', cta: 'Shop Now', image: shoe6 },
   { id: 6, productName: 'Asics Gel-Kayano 30', discount: '20%', promo: 'SALE', cta: 'Grab It', image: shoe7 },
   { id: 7, productName: 'Hoka Clifton 9', discount: '50%', promo: 'CLEARANCE', cta: 'Buy Now', image: shoe8 },
-  { id: 8, productName: 'On Cloud 5', discount: '10%', promo: 'NEW ARRIVAL', cta: 'Explore', image: shoe9 },
+  { id: 8, productName: 'On Cloud 5', discount: '10%', promo: 'NEW', cta: 'Explore', image: shoe9 },
 ]
 
 // Helper to get unmapped counts

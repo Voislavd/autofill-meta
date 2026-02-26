@@ -76,7 +76,7 @@ export default function App() {
       setBatchDesigns(BATCH_PRODUCTS.slice(0, count))
       setIsApplied(true)
       setIsGenerating(false)
-    }, 2000)
+    }, 3000)
   }
 
   const handleFieldMap = (elementId, fieldId) => {

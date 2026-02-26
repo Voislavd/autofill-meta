@@ -45,16 +45,6 @@ export default function EditorArea({
   }
 
   const renderCanvas = () => {
-    if (isGenerating) {
-      return (
-        <div className="generating-overlay">
-          <div className="generating-spinner" />
-          <span className="generating-text">Generating designs...</span>
-          <span className="generating-subtext">Creating unique designs for each product</span>
-        </div>
-      )
-    }
-
     if (batchDesigns) {
       return <BatchPreview designs={batchDesigns} />
     }
@@ -89,7 +79,7 @@ export default function EditorArea({
 
   return (
     <main className={`editor-area ${isPanelOpen ? '' : 'panel-closed'}`}>
-      {!showTemplatePreview && !batchDesigns && !isGenerating && <Toolbar />}
+      {!showTemplatePreview && !batchDesigns && <Toolbar />}
       <div className="canvas-container">
         {renderCanvas()}
       </div>
