@@ -31,10 +31,31 @@ export const CLIENTS = [
 ]
 
 export const DATA_SOURCES = [
-  { id: 'benefits-hris', name: 'Benefits HRIS One Digital', connected: true },
-  { id: 'rates-db', name: 'Rates Database', connected: true },
-  { id: 'payroll-system', name: 'Payroll System', connected: false }
+  { id: 'meta-catalogue', name: 'Meta Catalogue', connected: true },
+  { id: 'google-sheets', name: 'Google Sheets', connected: true },
+  { id: 'shopify-store', name: 'Shopify Store', connected: false }
 ]
+
+export const CATALOGUE_FILTERS = {
+  dateRange: [
+    { id: 'last-7', label: 'Last 7 days', count: 40 },
+    { id: 'last-30', label: 'Last 30 days', count: 85 },
+    { id: 'all-time', label: 'All time', count: 120 },
+  ],
+  category: [
+    { id: 'all', label: 'All categories', count: 120 },
+    { id: 'running-shoes', label: 'Running Shoes', count: 28 },
+    { id: 'apparel', label: 'Apparel', count: 35 },
+    { id: 'accessories', label: 'Accessories', count: 22 },
+    { id: 'outdoor', label: 'Outdoor Gear', count: 18 },
+    { id: 'lifestyle', label: 'Lifestyle', count: 17 },
+  ],
+  status: [
+    { id: 'new', label: 'New', count: 40 },
+    { id: 'updated', label: 'Updated', count: 15 },
+    { id: 'all', label: 'All', count: 120 },
+  ],
+}
 
 export const SCHEMA = {
   id: 'meta-catalogue',
@@ -90,38 +111,17 @@ export const TEMPLATES = [
     category: 'product-ad',
     isMapped: true,
     thumbnail: template1Thumb,
-    bgColor: '#F6F7F8', // Light gray
+    bgColor: '#F6F7F8',
     pages: [
       {
         id: 'page-1',
-        title: 'Cover',
+        title: 'Ad Creative',
         elements: [
-          { id: 'el-1', type: 'text', label: 'ABC Company', x: 740, y: 178, width: 200, mappedField: 'company-name' },
-          { id: 'el-2', type: 'text', label: 'For xx employees', x: 740, y: 663, width: 200, mappedField: 'employee-count' },
-          { id: 'el-12', type: 'image', label: 'Hero Image', x: 740, y: 400, width: 300, height: 200, mappedField: 'hero-photo' },
-          { id: 'el-13', type: 'image', label: 'Company Logo', x: 740, y: 100, width: 150, height: 80, mappedField: 'company-logo' },
-        ]
-      },
-      {
-        id: 'page-2',
-        title: 'Overview',
-        elements: [
-          { id: 'el-10', type: 'text', label: 'Department Name', x: 100, y: 200, width: 200, mappedField: 'department' },
-          { id: 'el-11', type: 'text', label: 'Start Date', x: 100, y: 300, width: 150, mappedField: 'start-date' },
-          { id: 'el-14', type: 'text', label: 'Job Type', x: 100, y: 400, width: 150, mappedField: 'job-type' },
-          { id: 'el-15', type: 'text', label: 'Job Title', x: 100, y: 450, width: 200, mappedField: 'job-title' },
-          { id: 'el-16', type: 'text', label: 'Manager Name', x: 100, y: 500, width: 200, mappedField: 'manager-name' },
-          { id: 'el-17', type: 'text', label: 'Office Location', x: 100, y: 550, width: 200, mappedField: 'office-location' },
-          { id: 'el-18', type: 'text', label: 'Employee Type', x: 300, y: 200, width: 150, mappedField: 'employee-type' },
-          { id: 'el-19', type: 'text', label: 'Employee ID', x: 300, y: 250, width: 150, mappedField: 'employee-id' },
-          { id: 'el-20', type: 'image', label: 'Team Photo', x: 400, y: 400, width: 250, height: 180, mappedField: 'team-photo' },
-        ]
-      },
-      {
-        id: 'page-3',
-        title: 'Contact',
-        elements: [
-          { id: 'el-4', type: 'table', label: 'Contact Information', x: 740, y: 300, width: 400, mappedField: 'contact-info' },
+          { id: 'el-1', type: 'text', label: 'Product Name', mappedField: 'product-name' },
+          { id: 'el-2', type: 'text', label: 'Promo Label', mappedField: 'promo-label' },
+          { id: 'el-3', type: 'text', label: 'Discount %', mappedField: 'discount-percent' },
+          { id: 'el-4', type: 'image', label: 'Product Image', mappedField: 'product-image' },
+          { id: 'el-5', type: 'text', label: 'CTA Text', mappedField: 'cta-text' },
         ]
       }
     ]
@@ -137,26 +137,13 @@ export const TEMPLATES = [
     pages: [
       {
         id: 't2-page-1',
-        title: 'Cover',
+        title: 'Ad Creative',
         elements: [
-          { id: 't2-el-1', type: 'text', label: 'ABC Company', mappedField: 'company-name' },
-          { id: 't2-el-2', type: 'text', label: 'For xx employees', mappedField: 'employee-count' },
-          { id: 't2-el-3', type: 'image', label: 'Hero Image', mappedField: 'hero-photo' },
-        ]
-      },
-      {
-        id: 't2-page-2',
-        title: 'Overview',
-        elements: [
-          { id: 't2-el-4', type: 'text', label: 'Department Name', mappedField: 'department' },
-          { id: 't2-el-5', type: 'text', label: 'Start Date', mappedField: 'start-date' },
-        ]
-      },
-      {
-        id: 't2-page-3',
-        title: 'Contact',
-        elements: [
-          { id: 't2-el-6', type: 'table', label: 'Contact Information', mappedField: 'contact-info' },
+          { id: 't2-el-1', type: 'text', label: 'Product Name', mappedField: 'product-name' },
+          { id: 't2-el-2', type: 'text', label: 'Promo Label', mappedField: 'promo-label' },
+          { id: 't2-el-3', type: 'text', label: 'Discount %', mappedField: 'discount-percent' },
+          { id: 't2-el-4', type: 'image', label: 'Product Image', mappedField: 'product-image' },
+          { id: 't2-el-5', type: 'text', label: 'CTA Text', mappedField: 'cta-text' },
         ]
       }
     ]
@@ -172,26 +159,13 @@ export const TEMPLATES = [
     pages: [
       {
         id: 't3-page-1',
-        title: 'Cover',
+        title: 'Ad Creative',
         elements: [
-          { id: 't3-el-1', type: 'text', label: 'ABC Company', mappedField: 'company-name' },
-          { id: 't3-el-2', type: 'text', label: 'For xx employees', mappedField: 'employee-count' },
-          { id: 't3-el-3', type: 'image', label: 'Hero Image', mappedField: 'hero-photo' },
-        ]
-      },
-      {
-        id: 't3-page-2',
-        title: 'Overview',
-        elements: [
-          { id: 't3-el-4', type: 'text', label: 'Department Name', mappedField: 'department' },
-          { id: 't3-el-5', type: 'text', label: 'Start Date', mappedField: 'start-date' },
-        ]
-      },
-      {
-        id: 't3-page-3',
-        title: 'Contact',
-        elements: [
-          { id: 't3-el-6', type: 'table', label: 'Contact Information', mappedField: 'contact-info' },
+          { id: 't3-el-1', type: 'text', label: 'Product Name', mappedField: 'product-name' },
+          { id: 't3-el-2', type: 'text', label: 'Promo Label', mappedField: 'promo-label' },
+          { id: 't3-el-3', type: 'text', label: 'Discount %', mappedField: 'discount-percent' },
+          { id: 't3-el-4', type: 'image', label: 'Product Image', mappedField: 'product-image' },
+          { id: 't3-el-5', type: 'text', label: 'CTA Text', mappedField: 'cta-text' },
         ]
       }
     ]
@@ -207,26 +181,13 @@ export const TEMPLATES = [
     pages: [
       {
         id: 't4-page-1',
-        title: 'Cover',
+        title: 'Ad Creative',
         elements: [
-          { id: 't4-el-1', type: 'text', label: 'ABC Company', mappedField: 'company-name' },
-          { id: 't4-el-2', type: 'text', label: 'For xx employees', mappedField: 'employee-count' },
-          { id: 't4-el-3', type: 'image', label: 'Hero Image', mappedField: 'hero-photo' },
-        ]
-      },
-      {
-        id: 't4-page-2',
-        title: 'Overview',
-        elements: [
-          { id: 't4-el-4', type: 'text', label: 'Department Name', mappedField: 'department' },
-          { id: 't4-el-5', type: 'text', label: 'Start Date', mappedField: 'start-date' },
-        ]
-      },
-      {
-        id: 't4-page-3',
-        title: 'Contact',
-        elements: [
-          { id: 't4-el-6', type: 'table', label: 'Contact Information', mappedField: 'contact-info' },
+          { id: 't4-el-1', type: 'text', label: 'Product Name', mappedField: 'product-name' },
+          { id: 't4-el-2', type: 'text', label: 'Promo Label', mappedField: 'promo-label' },
+          { id: 't4-el-3', type: 'text', label: 'Discount %', mappedField: 'discount-percent' },
+          { id: 't4-el-4', type: 'image', label: 'Product Image', mappedField: 'product-image' },
+          { id: 't4-el-5', type: 'text', label: 'CTA Text', mappedField: 'cta-text' },
         ]
       }
     ]
@@ -242,26 +203,13 @@ export const TEMPLATES = [
     pages: [
       {
         id: 't5-page-1',
-        title: 'Cover',
+        title: 'Ad Creative',
         elements: [
-          { id: 't5-el-1', type: 'text', label: 'ABC Company', mappedField: 'company-name' },
-          { id: 't5-el-2', type: 'text', label: 'For xx employees', mappedField: 'employee-count' },
-          { id: 't5-el-3', type: 'image', label: 'Hero Image', mappedField: 'hero-photo' },
-        ]
-      },
-      {
-        id: 't5-page-2',
-        title: 'Overview',
-        elements: [
-          { id: 't5-el-4', type: 'text', label: 'Department Name', mappedField: 'department' },
-          { id: 't5-el-5', type: 'text', label: 'Start Date', mappedField: 'start-date' },
-        ]
-      },
-      {
-        id: 't5-page-3',
-        title: 'Contact',
-        elements: [
-          { id: 't5-el-6', type: 'table', label: 'Contact Information', mappedField: 'contact-info' },
+          { id: 't5-el-1', type: 'text', label: 'Product Name', mappedField: 'product-name' },
+          { id: 't5-el-2', type: 'text', label: 'Promo Label', mappedField: 'promo-label' },
+          { id: 't5-el-3', type: 'text', label: 'Discount %', mappedField: 'discount-percent' },
+          { id: 't5-el-4', type: 'image', label: 'Product Image', mappedField: 'product-image' },
+          { id: 't5-el-5', type: 'text', label: 'CTA Text', mappedField: 'cta-text' },
         ]
       }
     ]
@@ -277,26 +225,13 @@ export const TEMPLATES = [
     pages: [
       {
         id: 't6-page-1',
-        title: 'Cover',
+        title: 'Ad Creative',
         elements: [
-          { id: 't6-el-1', type: 'text', label: 'ABC Company', mappedField: 'company-name' },
-          { id: 't6-el-2', type: 'text', label: 'For xx employees', mappedField: 'employee-count' },
-          { id: 't6-el-3', type: 'image', label: 'Hero Image', mappedField: 'hero-photo' },
-        ]
-      },
-      {
-        id: 't6-page-2',
-        title: 'Overview',
-        elements: [
-          { id: 't6-el-4', type: 'text', label: 'Department Name', mappedField: 'department' },
-          { id: 't6-el-5', type: 'text', label: 'Start Date', mappedField: 'start-date' },
-        ]
-      },
-      {
-        id: 't6-page-3',
-        title: 'Contact',
-        elements: [
-          { id: 't6-el-6', type: 'table', label: 'Contact Information', mappedField: 'contact-info' },
+          { id: 't6-el-1', type: 'text', label: 'Product Name', mappedField: 'product-name' },
+          { id: 't6-el-2', type: 'text', label: 'Promo Label', mappedField: 'promo-label' },
+          { id: 't6-el-3', type: 'text', label: 'Discount %', mappedField: 'discount-percent' },
+          { id: 't6-el-4', type: 'image', label: 'Product Image', mappedField: 'product-image' },
+          { id: 't6-el-5', type: 'text', label: 'CTA Text', mappedField: 'cta-text' },
         ]
       }
     ]

@@ -1,4 +1,5 @@
-import { DATA_SOURCES, SCHEMA } from '../../data/sampleData'
+import { useState, useMemo } from 'react'
+import { DATA_SOURCES, SCHEMA, CATALOGUE_FILTERS } from '../../data/sampleData'
 import './panels.css'
 
 export default function CreateConnector({
@@ -10,32 +11,30 @@ export default function CreateConnector({
   onBack,
   onClose
 }) {
+  const [selectedDateRange, setSelectedDateRange] = useState('last-7')
+  const [selectedCategory, setSelectedCategory] = useState('all')
+  const [selectedStatus, setSelectedStatus] = useState('new')
 
-  // Get connected data sources only
   const connectedSources = DATA_SOURCES.filter(s => s.connected)
 
-  // Get all fields that are mapped in this template (fields, media, tables)
   const getMappedItems = () => {
     if (!template || !mappings) return []
 
     const mappedFieldIds = Object.values(mappings)
     const items = []
 
-    // Add text fields
     SCHEMA.fields.forEach(field => {
       if (mappedFieldIds.includes(field.id)) {
         items.push({ ...field, category: 'field' })
       }
     })
 
-    // Add media
     SCHEMA.media.forEach(media => {
       if (mappedFieldIds.includes(media.id)) {
         items.push({ ...media, category: 'media' })
       }
     })
 
-    // Add tables
     SCHEMA.tables.forEach(table => {
       if (mappedFieldIds.includes(table.id)) {
         items.push({ ...table, category: 'table' })
@@ -55,9 +54,12 @@ export default function CreateConnector({
     }
   }
 
-  const handleApply = () => {
-    onApply()
-  }
+  const productCount = useMemo(() => {
+    const dateCount = CATALOGUE_FILTERS.dateRange.find(f => f.id === selectedDateRange)?.count || 0
+    const catCount = CATALOGUE_FILTERS.category.find(f => f.id === selectedCategory)?.count || 0
+    const statusCount = CATALOGUE_FILTERS.status.find(f => f.id === selectedStatus)?.count || 0
+    return Math.min(dateCount, catCount, statusCount)
+  }, [selectedDateRange, selectedCategory, selectedStatus])
 
   return (
     <div className="create-connector">
@@ -84,6 +86,61 @@ export default function CreateConnector({
             ))}
           </select>
           <span className="dropdown-chevron">▼</span>
+        </div>
+      </div>
+
+      {/* Filters */}
+      <div className="connector-section">
+        <label className="section-label">Filters</label>
+        <div className="connector-filters">
+          <div className="filter-dropdown">
+            <select
+              className="filter-select"
+              value={selectedDateRange}
+              onChange={(e) => setSelectedDateRange(e.target.value)}
+            >
+              {CATALOGUE_FILTERS.dateRange.map(opt => (
+                <option key={opt.id} value={opt.id}>
+                  {opt.label}
+                </option>
+              ))}
+            </select>
+            <span className="dropdown-chevron">▼</span>
+          </div>
+
+          <div className="filter-dropdown">
+            <select
+              className="filter-select"
+              value={selectedCategory}
+              onChange={(e) => setSelectedCategory(e.target.value)}
+            >
+              {CATALOGUE_FILTERS.category.map(opt => (
+                <option key={opt.id} value={opt.id}>
+                  {opt.label}
+                </option>
+              ))}
+            </select>
+            <span className="dropdown-chevron">▼</span>
+          </div>
+
+          <div className="filter-dropdown">
+            <select
+              className="filter-select"
+              value={selectedStatus}
+              onChange={(e) => setSelectedStatus(e.target.value)}
+            >
+              {CATALOGUE_FILTERS.status.map(opt => (
+                <option key={opt.id} value={opt.id}>
+                  {opt.label}
+                </option>
+              ))}
+            </select>
+            <span className="dropdown-chevron">▼</span>
+          </div>
+        </div>
+
+        <div className="record-count">
+          <span className="record-count-number">{productCount}</span> products selected
         </div>
       </div>
 
@@ -120,24 +177,29 @@ export default function CreateConnector({
         </div>
       </div>
 
-      {/* Apply Button */}
-      <button
-        className={`apply-btn ${isApplied ? 'applied' : ''}`}
-        onClick={handleApply}
-        disabled={isApplied || mappedItems.length === 0}
-      >
-        {isApplied ? (
-          <>
-            <span className="btn-icon">✓</span>
-            <span>Applied to design</span>
-          </>
-        ) : (
-          <>
-            <span className="btn-icon">✦</span>
-            <span>Apply to design</span>
-          </>
-        )}
-      </button>
+      {/* Create Summary + Button */}
+      <div className="create-bottom">
+        <p className="create-summary">
+          This will create <strong>{productCount}</strong> designs
+        </p>
+        <button
+          className={`apply-btn ${isApplied ? 'applied' : ''}`}
+          onClick={onApply}
+          disabled={isApplied || mappedItems.length === 0}
+        >
+          {isApplied ? (
+            <>
+              <span className="btn-icon">✓</span>
+              <span>Created {productCount} designs</span>
+            </>
+          ) : (
+            <>
+              <span className="btn-icon">✦</span>
+              <span>Create {productCount} designs</span>
+            </>
+          )}
+        </button>
+      </div>
     </div>
   )
 }
