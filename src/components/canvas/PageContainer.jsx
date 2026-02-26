@@ -3,6 +3,12 @@ import './canvas-preview.css'
 import iconDatabaseSmall from '../../assets/icons/icon-database-small.png'
 import iconDisconnect from '../../assets/icons/icon-disconnect.png'
 import shoeImage from '../../assets/images/shoe.png'
+import iconChevronDown from '../../assets/icons/down-chevron-canvas.png'
+import iconChevronUp from '../../assets/icons/up-chevron-canvas.png'
+import iconLock from '../../assets/icons/lock.png'
+import iconDuplicate from '../../assets/icons/Duplicate.png'
+import iconDelete from '../../assets/icons/Delete.png'
+import iconAdd from '../../assets/icons/Add.png'
 
 export default function PageContainer({
   page,
@@ -173,12 +179,12 @@ export default function PageContainer({
         <span className="page-label">Page {pageNumber}</span>
         <span className="page-title-input">- Add page title</span>
         <div className="page-actions">
-          <button className="page-action">⌄</button>
-          <button className="page-action">⌃</button>
-          <button className="page-action">🔒</button>
-          <button className="page-action">📋</button>
-          <button className="page-action">🗑</button>
-          <button className="page-action">⊕</button>
+          <button className="page-action"><img src={iconChevronDown} alt="Move down" /></button>
+          <button className="page-action"><img src={iconChevronUp} alt="Move up" /></button>
+          <button className="page-action"><img src={iconLock} alt="Lock" /></button>
+          <button className="page-action"><img src={iconDuplicate} alt="Duplicate" /></button>
+          <button className="page-action"><img src={iconDelete} alt="Delete" /></button>
+          <button className="page-action"><img src={iconAdd} alt="Add page" /></button>
         </div>
       </div>
 
