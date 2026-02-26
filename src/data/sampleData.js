@@ -1,5 +1,9 @@
 import template1Thumb from '../assets/images/template-1.png'
 import template2Thumb from '../assets/images/template-2.png'
+import template3Thumb from '../assets/images/template-3.png'
+import template4Thumb from '../assets/images/template-4.png'
+import template5Thumb from '../assets/images/template-5.png'
+import template6Thumb from '../assets/images/template-6.png'
 
 // Sample data for the Autofill prototype
 
@@ -81,11 +85,11 @@ export const SCHEMA = {
 export const TEMPLATES = [
   {
     id: 'template-1',
-    title: 'Employee Benefits Guide',
-    type: 'Multi-page PDF',
-    category: 'benefits',
+    title: 'Product Sale Ad',
+    type: 'Social media post',
+    category: 'product-ad',
     isMapped: true,
-    thumbnail: '/images/templates/benefits-guide1.png',
+    thumbnail: template1Thumb,
     bgColor: '#F6F7F8', // Light gray
     pages: [
       {
@@ -124,11 +128,11 @@ export const TEMPLATES = [
   },
   {
     id: 'template-2',
-    title: 'Employee Benefits Guide',
-    type: 'Multi-page PDF',
-    category: 'benefits',
+    title: 'Product Sale Ad',
+    type: 'Social media post',
+    category: 'product-ad',
     isMapped: true,
-    thumbnail: '/images/templates/benefits-guide2.png',
+    thumbnail: template2Thumb,
     bgColor: '#F6F7F8',
     pages: [
       {
@@ -159,11 +163,11 @@ export const TEMPLATES = [
   },
   {
     id: 'template-3',
-    title: 'Employee Benefits Guide',
-    type: 'Multi-page PDF',
-    category: 'benefits',
+    title: 'Product Sale Ad',
+    type: 'Social media post',
+    category: 'product-ad',
     isMapped: true,
-    thumbnail: '/images/templates/benefits-guide3.png',
+    thumbnail: template3Thumb,
     bgColor: '#F6F7F8',
     pages: [
       {
@@ -194,11 +198,11 @@ export const TEMPLATES = [
   },
   {
     id: 'template-4',
-    title: 'Employee Benefits Guide',
-    type: 'Multi-page PDF',
-    category: 'benefits',
+    title: 'Product Sale Ad',
+    type: 'Social media post',
+    category: 'product-ad',
     isMapped: true,
-    thumbnail: '/images/templates/benefits-guide4.png',
+    thumbnail: template4Thumb,
     bgColor: '#F6F7F8',
     pages: [
       {
@@ -229,11 +233,11 @@ export const TEMPLATES = [
   },
   {
     id: 'template-5',
-    title: 'Employee Benefits Guide',
-    type: 'Multi-page PDF',
-    category: 'benefits',
+    title: 'Product Sale Ad',
+    type: 'Social media post',
+    category: 'product-ad',
     isMapped: true,
-    thumbnail: '/images/templates/benefits-guide5.png',
+    thumbnail: template5Thumb,
     bgColor: '#F6F7F8',
     pages: [
       {
@@ -264,11 +268,11 @@ export const TEMPLATES = [
   },
   {
     id: 'template-6',
-    title: 'Employee Benefits Guide',
-    type: 'Multi-page PDF',
-    category: 'benefits',
+    title: 'Product Sale Ad',
+    type: 'Social media post',
+    category: 'product-ad',
     isMapped: true,
-    thumbnail: '/images/templates/benefits-guide6.png',
+    thumbnail: template6Thumb,
     bgColor: '#F6F7F8',
     pages: [
       {
@@ -321,8 +325,8 @@ export const TEMPLATES = [
   },
   {
     id: 'template-8',
-    title: 'Workplace Campaign',
-    type: 'Social media story',
+    title: 'Product Sale Ad',
+    type: 'Social media post',
     category: 'product-ad',
     isMapped: false,
     thumbnail: template2Thumb,

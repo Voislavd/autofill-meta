@@ -3,7 +3,7 @@ import tagIcon from '../../../assets/icons/icon-tag-text.svg'
 
 export default function TemplateCard({ template, dataSource, onMapTemplate, onGenerateWithAI }) {
   return (
-    <div className="template-card">
+    <div className="ai-template-card">
       <div className="template-card-context">
         <div className="context-card">
           <div className="context-card-square">
