@@ -4,8 +4,10 @@ import AIAssistMappingCard from './canva-ai/AIAssistMappingCard'
 import FieldsSchemaSection from '../autofill/FieldsSchemaSection'
 import FieldListView from '../autofill/FieldListView'
 import AllMappingsView from '../autofill/AllMappingsView'
-import MappedFieldsList from '../autofill/MappedFieldsList'
 import { SCHEMA } from '../../data/sampleData'
+import textFieldIcon from '../../assets/icons/text-field-icon.png'
+import mediaIcon from '../../assets/icons/media-icon.png'
+import tableIcon from '../../assets/icons/table-icon.png'
 
 const AI_MAPPING_RULES = {
   'Product Name': 'product-name',
@@ -184,18 +186,32 @@ export default function MappingsPanel({
         onViewAllClick={handleViewAllClick}
       />
 
-      {/* Show Mapped Fields when fields are mapped */}
-      {mappedFields.length > 0 && (
-        <div className="mapped-fields-section">
-          <h4 className="section-label">Matched fields (Page {selectedPageIndex + 1})</h4>
-
-          <MappedFieldsList
-            fields={mappedFields}
-            onUnmap={onFieldUnmap}
-            onFieldClick={onFieldHighlight}
-          />
-        </div>
-      )}
+      {/* Matched Fields Summary Card */}
+      {mappedFields.length > 0 && (() => {
+        const textCount = mappedFields.filter(f => f.type === 'text').length
+        const mediaCount = mappedFields.filter(f => f.type === 'image').length
+        const tableCount = mappedFields.filter(f => f.type === 'table').length
+        const fieldNames = mappedFields.map(f => f.label).slice(0, 3).join(', ')
+        return (
+          <div className="mapped-fields-section">
+            <h4 className="section-label">Matched fields</h4>
+            <div className="fields-summary-card" onClick={handleViewAllClick}>
+              <div className="fields-summary-top">
+                <span className="fields-summary-count">{mappedFields.length} fields matched</span>
+                <button className="edit-mappings-link" onClick={(e) => { e.stopPropagation(); handleViewAllClick() }}>
+                  View matched fields
+                </button>
+              </div>
+              <div className="fields-summary-detail">
+                {textCount > 0 && <span className="fields-summary-tag"><img src={textFieldIcon} alt="" className="fields-summary-tag-icon" /> {textCount} text fields</span>}
+                {mediaCount > 0 && <span className="fields-summary-tag"><img src={mediaIcon} alt="" className="fields-summary-tag-icon" /> {mediaCount} media</span>}
+                {tableCount > 0 && <span className="fields-summary-tag"><img src={tableIcon} alt="" className="fields-summary-tag-icon" /> {tableCount} tables</span>}
+              </div>
+              <p className="fields-summary-preview">{fieldNames}{mappedFields.length > 3 ? '...' : ''}</p>
+            </div>
+          </div>
+        )
+      })()}
 
       {/* Save Button */}
       <div className="mappings-save-footer">

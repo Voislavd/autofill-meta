@@ -1,6 +1,9 @@
 import { useState, useMemo } from 'react'
 import { DATA_SOURCES, SCHEMA, CATALOGUE_FILTERS } from '../../data/sampleData'
 import Dropdown from '../ui/Dropdown'
+import textFieldIcon from '../../assets/icons/text-field-icon.png'
+import mediaIcon from '../../assets/icons/media-icon.png'
+import tableIcon from '../../assets/icons/table-icon.png'
 import './panels.css'
 
 export default function CreateConnector({
@@ -137,9 +140,9 @@ export default function CreateConnector({
               </button>
             </div>
             <div className="fields-summary-detail">
-              {fieldCount > 0 && <span className="fields-summary-tag">Aa {fieldCount} text</span>}
-              {mediaCount > 0 && <span className="fields-summary-tag">🖼 {mediaCount} media</span>}
-              {tableCount > 0 && <span className="fields-summary-tag">☰ {tableCount} tables</span>}
+              {fieldCount > 0 && <span className="fields-summary-tag"><img src={textFieldIcon} alt="" className="fields-summary-tag-icon" /> {fieldCount} text fields</span>}
+              {mediaCount > 0 && <span className="fields-summary-tag"><img src={mediaIcon} alt="" className="fields-summary-tag-icon" /> {mediaCount} media</span>}
+              {tableCount > 0 && <span className="fields-summary-tag"><img src={tableIcon} alt="" className="fields-summary-tag-icon" /> {tableCount} tables</span>}
             </div>
             <p className="fields-summary-preview">{fieldNames}{fieldCount > 3 ? '...' : ''}</p>
           </div>
