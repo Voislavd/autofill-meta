@@ -3,8 +3,8 @@ import TemplateGrid from '../autofill/TemplateGrid'
 import FilterTabs from '../autofill/FilterTabs'
 
 const FILTER_TABS = [
-  { id: 'unmapped', label: 'Unmapped' },
-  { id: 'mapped', label: 'Mapped' }
+  { id: 'unmapped', label: 'Unmatched' },
+  { id: 'mapped', label: 'Matched' }
 ]
 
 export default function ChooseTemplate({
@@ -50,7 +50,7 @@ export default function ChooseTemplate({
             <path d="M12.5 15L7.5 10L12.5 5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
           </svg>
         </button>
-        <h2 className="panel-nav-title">Map a template</h2>
+        <h2 className="panel-nav-title">Match a template</h2>
         <button className="autofill-close" onClick={onClose}>×</button>
       </div>
 

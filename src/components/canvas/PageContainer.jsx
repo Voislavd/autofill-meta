@@ -2,6 +2,7 @@ import MappedBadge from './MappedBadge'
 import './canvas-preview.css'
 import iconDatabaseSmall from '../../assets/icons/icon-database-small.png'
 import iconDisconnect from '../../assets/icons/icon-disconnect.png'
+import shoeImage from '../../assets/images/shoe.png'
 
 export default function PageContainer({
   page,
@@ -104,7 +105,7 @@ export default function PageContainer({
             <button
               className="badge-remove-mini"
               onClick={(e) => handleUnmap(element.id, e)}
-              title="Unmap field"
+              title="Unmatch field"
             >
               <img src={iconDisconnect} alt="" />
             </button>
@@ -113,7 +114,7 @@ export default function PageContainer({
         {/* Show drop indicator when dragging */}
         {canDrop && isDragOver && (
           <div className="drop-indicator">
-            <span>Drop to map</span>
+            <span>Drop to match</span>
           </div>
         )}
       </div>
@@ -138,20 +139,22 @@ export default function PageContainer({
     return placeholder
   }
 
-  // Page 1 elements
+  // Product ad elements
+  const productNameElement = findElement('product name')
+  const promoLabelElement = findElement('promo label') || findElement('promo')
+  const discountElement = findElement('discount')
+  const productImageElement = findElement('product image') || findElement('product')
+  const ctaElement = findElement('cta')
+
+  // Legacy benefit elements (for mapped templates)
   const companyElement = findElement('company') || findElement('abc')
   const employeeElement = findElement('employee') || findElement('xx')
   const heroElement = findElement('hero')
-
-  // Page 2 elements
   const summaryElement = findElement('summary') || findElement('benefits summary')
   const departmentElement = findElement('department')
   const startDateElement = findElement('start date')
-
-  // Page 3 elements
   const tableElement = findElement('contact') || findElement('table')
 
-  // Hero images for the applied state
   const heroImages = [
     '/images/people/image1.png',
     '/images/people/image2.png',
@@ -159,6 +162,9 @@ export default function PageContainer({
     '/images/people/image4.png',
     '/images/people/image5.png'
   ]
+
+  // Detect if this is a product ad template
+  const isProductAd = !!productNameElement || !!promoLabelElement
 
   return (
     <div className={`page-container ${isSelected ? 'selected' : ''} ${isApplied ? 'page-applied' : ''}`}>
@@ -180,17 +186,85 @@ export default function PageContainer({
       <div className={`page-content ${isClickToMapMode ? 'click-mode' : ''} ${isApplied ? 'is-applied' : ''}`}>
         {/* Template Visual */}
         <div className="page-visual">
-          {/* ==================== PAGE 1: COVER ==================== */}
-          {pageNumber === 1 && (
-            <div className="cover-page">
-              {/* Top accent bar */}
-              <div className="cover-accent-bar" />
+          {/* ==================== PRODUCT AD PAGE ==================== */}
+          {pageNumber === 1 && isProductAd && (
+            <div className="product-ad-page">
+              {/* Geometric accents */}
+              <div className="ad-accent ad-accent-tl" />
+              <div className="ad-accent ad-accent-br" />
 
-              {/* Main content area */}
+              {/* Product name */}
+              <div className="ad-product-name-section">
+                {productNameElement ? (
+                  <SelectableElement element={productNameElement} className="ad-product-name-wrapper">
+                    <span className="ad-product-name">
+                      {getDisplayValue(productNameElement, 'PRODUCT NAME')}
+                    </span>
+                  </SelectableElement>
+                ) : (
+                  <span className="ad-product-name">PRODUCT NAME</span>
+                )}
+              </div>
+
+              {/* Sale / Discount row */}
+              <div className="ad-promo-row">
+                <div className="ad-promo-left">
+                  {promoLabelElement ? (
+                    <SelectableElement element={promoLabelElement} className="ad-promo-label-wrapper">
+                      <span className="ad-promo-label">
+                        {getDisplayValue(promoLabelElement, 'SALE')}
+                      </span>
+                    </SelectableElement>
+                  ) : (
+                    <span className="ad-promo-label">SALE</span>
+                  )}
+                </div>
+                <div className="ad-promo-divider" />
+                <div className="ad-promo-right">
+                  {discountElement ? (
+                    <SelectableElement element={discountElement} className="ad-discount-wrapper">
+                      <span className="ad-discount">
+                        {getDisplayValue(discountElement, '30%')}
+                      </span>
+                      <span className="ad-discount-off">OFF</span>
+                    </SelectableElement>
+                  ) : (
+                    <>
+                      <span className="ad-discount">30%</span>
+                      <span className="ad-discount-off">OFF</span>
+                    </>
+                  )}
+                </div>
+              </div>
+
+              {/* Product image */}
+              <div className="ad-product-image-section">
+                {productImageElement ? (
+                  <SelectableElement element={productImageElement} className="ad-product-image-wrapper">
+                    <img src={shoeImage} alt="Product" className="ad-product-img" />
+                  </SelectableElement>
+                ) : (
+                  <img src={shoeImage} alt="Product" className="ad-product-img" />
+                )}
+              </div>
+
+              {/* CTA */}
+              {ctaElement && (
+                <div className="ad-cta-section">
+                  <SelectableElement element={ctaElement} className="ad-cta-wrapper">
+                    <span className="ad-cta">{getDisplayValue(ctaElement, 'Shop Now')}</span>
+                  </SelectableElement>
+                </div>
+              )}
+            </div>
+          )}
+
+          {/* ==================== PAGE 1: COVER (Legacy Benefits) ==================== */}
+          {pageNumber === 1 && !isProductAd && (
+            <div className="cover-page">
+              <div className="cover-accent-bar" />
               <div className="cover-main">
-                {/* Left side - Text content */}
                 <div className="cover-text-side">
-                  {/* Company name */}
                   <div className="cover-company-section">
                     {companyElement ? (
                       <SelectableElement element={companyElement} className="cover-company-wrapper">
@@ -202,14 +276,10 @@ export default function PageContainer({
                       <span className="cover-company">{isApplied ? 'Acme Corporation' : 'ABC Company'}</span>
                     )}
                   </div>
-
-                  {/* Main title */}
                   <div className="cover-title-section">
                     <h1 className="cover-title">Your Benefits</h1>
                     <div className="cover-title-accent" />
                   </div>
-
-                  {/* Employee count */}
                   <div className="cover-employee-section">
                     {employeeElement ? (
                       <SelectableElement element={employeeElement} className="cover-employee-wrapper">
@@ -223,14 +293,10 @@ export default function PageContainer({
                       <span className="cover-employee">For xx employees</span>
                     )}
                   </div>
-
-                  {/* Date range */}
                   <div className="cover-date">
                     Effective January - December 2025
                   </div>
                 </div>
-
-                {/* Right side - Hero image */}
                 <div className="cover-image-side">
                   {heroElement ? (
                     <SelectableElement element={heroElement} className="cover-image-wrapper">
@@ -253,8 +319,6 @@ export default function PageContainer({
                   )}
                 </div>
               </div>
-
-              {/* Bottom accent */}
               <div className="cover-bottom-accent">
                 <div className="accent-pattern">
                   <span></span><span></span><span></span>

@@ -14,6 +14,56 @@
   margin: 0 auto;
 }
 
+/* Single page mode */
+.template-preview.single-page-mode {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  padding: 24px;
+}
+
+.template-preview.single-page-mode .pages-scroll-container {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  max-width: 100%;
+  width: 100%;
+}
+
+.template-preview.single-page-mode .page-scroll-anchor {
+  width: 100%;
+  max-width: 700px;
+}
+
+.single-page-dots {
+  display: flex;
+  gap: 8px;
+  justify-content: center;
+  padding: 16px 0;
+}
+
+.page-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  border: none;
+  background: #d0d0d0;
+  cursor: pointer;
+  padding: 0;
+  transition: all 0.15s ease;
+}
+
+.page-dot.active {
+  background: var(--purple-accent);
+  transform: scale(1.25);
+}
+
+.page-dot:hover:not(.active) {
+  background: #aaa;
+}
+
 /* Page Container */
 .page-container {
   background: white;
@@ -90,6 +140,138 @@
 .page-visual {
   width: 100%;
   height: 100%;
+}
+
+/* ==================== PRODUCT AD PAGE ==================== */
+.product-ad-page {
+  width: 100%;
+  height: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  background: linear-gradient(135deg, #0a3d7c 0%, #0b68c8 40%, #1a8fe0 70%, #0b68c8 100%);
+  position: relative;
+  overflow: hidden;
+  padding: 10%;
+  gap: 4%;
+}
+
+.ad-accent {
+  position: absolute;
+  width: 22%;
+  height: 22%;
+  border: 3px solid rgba(255, 255, 255, 0.15);
+  transform: rotate(45deg);
+}
+
+.ad-accent-tl {
+  top: -4%;
+  left: -4%;
+}
+
+.ad-accent-br {
+  bottom: -4%;
+  right: -4%;
+}
+
+.ad-product-name-section {
+  width: 100%;
+  text-align: center;
+}
+
+.ad-product-name {
+  font-size: clamp(11px, 2.2vw, 16px);
+  font-weight: 500;
+  color: rgba(255, 255, 255, 0.85);
+  letter-spacing: 0.15em;
+  text-transform: uppercase;
+}
+
+.ad-promo-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 5%;
+  width: 100%;
+}
+
+.ad-promo-label {
+  font-size: clamp(28px, 6vw, 56px);
+  font-weight: 900;
+  color: white;
+  letter-spacing: 0.05em;
+  line-height: 1;
+}
+
+.ad-promo-divider {
+  width: 3px;
+  height: clamp(36px, 7vw, 64px);
+  background: rgba(255, 255, 255, 0.5);
+  border-radius: 2px;
+  flex-shrink: 0;
+}
+
+.ad-promo-right {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  line-height: 1;
+}
+
+.ad-discount {
+  font-size: clamp(28px, 6vw, 56px);
+  font-weight: 900;
+  color: white;
+  line-height: 1;
+}
+
+.ad-discount-off {
+  font-size: clamp(14px, 2.8vw, 24px);
+  font-weight: 700;
+  color: white;
+  letter-spacing: 0.1em;
+  line-height: 1.2;
+}
+
+.ad-product-image-section {
+  width: 75%;
+  aspect-ratio: 4 / 3;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ad-product-img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+  filter: drop-shadow(0 8px 24px rgba(0, 0, 0, 0.3));
+}
+
+.ad-cta-section {
+  width: 100%;
+  text-align: center;
+}
+
+.ad-cta {
+  font-size: clamp(12px, 2vw, 16px);
+  font-weight: 600;
+  color: white;
+  background: rgba(255, 255, 255, 0.15);
+  padding: 8px 28px;
+  border-radius: 20px;
+  letter-spacing: 0.05em;
+}
+
+/* Selectable overrides for product ad */
+.product-ad-page .selectable-element {
+  border-radius: 6px;
+}
+
+/* Make aspect ratio square for product ads */
+.page-content:has(.product-ad-page) {
+  aspect-ratio: 1 / 1;
 }
 
 /* ==================== PAGE 1: COVER REDESIGN ==================== */

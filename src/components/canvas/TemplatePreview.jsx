@@ -95,7 +95,8 @@ export default function TemplatePreview({
   dragOverElement,
   onElementDragOver,
   onElementDragLeave,
-  onElementDrop
+  onElementDrop,
+  singlePageMode = false
 }) {
   const [popoverState, setPopoverState] = useState({
     isOpen: false,
@@ -166,10 +167,14 @@ export default function TemplatePreview({
     setPopoverState({ isOpen: false, elementId: null, position: { x: 0, y: 0 } })
   }
 
+  const pagesToRender = singlePageMode
+    ? [{ page: template.pages[selectedPageIndex], index: selectedPageIndex }]
+    : template.pages.map((page, index) => ({ page, index }))
+
   return (
-    <div className="template-preview">
+    <div className={`template-preview ${singlePageMode ? 'single-page-mode' : ''}`}>
       <div className="pages-scroll-container" ref={scrollContainerRef}>
-        {template.pages.map((page, index) => (
+        {pagesToRender.map(({ page, index }) => (
           <div 
             key={page.id} 
             ref={el => pageRefs.current[index] = el}
@@ -199,6 +204,20 @@ export default function TemplatePreview({
           </div>
         ))}
       </div>
+
+      {/* Page dots for single page mode */}
+      {singlePageMode && template.pages.length > 1 && (
+        <div className="single-page-dots">
+          {template.pages.map((_, i) => (
+            <button
+              key={i}
+              className={`page-dot ${i === selectedPageIndex ? 'active' : ''}`}
+              onClick={() => onPageSelect(i)}
+              aria-label={`Page ${i + 1}`}
+            />
+          ))}
+        </div>
+      )}
 
       {popoverState.isOpen && (
         <FieldPopover

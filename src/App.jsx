@@ -9,7 +9,7 @@ import { SCHEMA } from './data/sampleData'
 import './App.css'
 
 export default function App() {
-  const [activePanel, setActivePanel] = useState('canva-ai')
+  const [activePanel, setActivePanel] = useState('apps')
 
   // Autofill state - lifted up for canvas coordination
   const [autofillView, setAutofillView] = useState('home')
@@ -199,9 +199,10 @@ export default function App() {
         schema={SCHEMA}
         highlightedElementId={highlightedElementId}
         isApplied={isApplied}
-        isInMappingMode={canvaAIMappingMode}
+        isInMappingMode={canvaAIMappingMode || (isAutofillPanel && autofillView === 'mappings')}
         isDraggingField={isDraggingField}
         onFieldDragEnd={() => setIsDraggingField(false)}
+        singlePageMode={isAutofillPanel && autofillView === 'mappings'}
       />
     </div>
   )

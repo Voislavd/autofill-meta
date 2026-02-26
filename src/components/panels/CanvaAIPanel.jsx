@@ -108,19 +108,18 @@ export default function CanvaAIPanel({
     if (!onFieldMap) return
 
     const aiMappingRules = {
-      'For xx employees': 'employee-count',
-      'Department': 'department',
-      'Start Date': 'start-date',
-      'Hero Image': 'hero-photo',
-      'Company Logo': 'company-logo',
-      'Team Photo': 'team-photo',
-      'Contact Information': 'contact-info',
-      'Job Type': 'job-type',
-      'Job Title': 'job-title',
-      'Manager Name': 'manager-name',
-      'Office Location': 'office-location',
-      'Employee Type': 'employee-type',
-      'Employee ID': 'employee-id',
+      'Product Name': 'product-name',
+      'Promo Label': 'promo-label',
+      'Discount': 'discount-percent',
+      'Product Image': 'product-image',
+      'CTA': 'cta-text',
+      'Brand': 'product-brand',
+      'Price': 'product-price',
+      'Sale Price': 'sale-price',
+      'Description': 'product-description',
+      'Category': 'product-category',
+      'Lifestyle': 'lifestyle-image',
+      'Logo': 'brand-logo',
     }
 
     let matched = 0
@@ -129,7 +128,7 @@ export default function CanvaAIPanel({
     template.pages.forEach(page => {
       page.elements.forEach(el => {
         total++
-        if (el.id === 'el-1') return
+        if (el.label === 'Product Name') return
         for (const [labelPattern, fieldId] of Object.entries(aiMappingRules)) {
           if (el.label && el.label.toLowerCase().includes(labelPattern.toLowerCase())) {
             onFieldMap(el.id, fieldId)

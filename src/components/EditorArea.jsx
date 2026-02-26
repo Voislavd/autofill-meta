@@ -20,7 +20,8 @@ export default function EditorArea({
   isApplied = false,
   isInMappingMode = false,
   isDraggingField = false,
-  onFieldDragEnd
+  onFieldDragEnd,
+  singlePageMode = false
 }) {
   const [dragOverElement, setDragOverElement] = useState(null)
 
@@ -64,6 +65,7 @@ export default function EditorArea({
             onElementDragOver={handleElementDragOver}
             onElementDragLeave={handleElementDragLeave}
             onElementDrop={handleElementDrop}
+            singlePageMode={singlePageMode}
           />
         ) : (
           <Canvas />

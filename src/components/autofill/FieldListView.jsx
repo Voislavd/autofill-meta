@@ -161,7 +161,7 @@ export default function FieldListView({
                   e.stopPropagation()
                   onDisconnect?.(item, mappingInfo)
                 }}
-                title="Disconnect mapping"
+                title="Disconnect matching"
               >
                 <img src={iconDisconnect} alt="Disconnect" className="disconnect-icon" />
               </button>

@@ -11,8 +11,8 @@ const ENTRY_POINTS = [
   },
   {
     id: 'map-template',
-    title: 'Map a template',
-    description: 'Define how data fills into designs',
+    title: 'Match fields to template',
+    description: 'Define how data fills into designs.',
     view: 'map-template',
     icon: '🔗'
   },
@@ -37,7 +37,7 @@ export default function AutofillHome({ onNavigate, onClose }) {
     <div className="autofill-home">
       {/* Header */}
       <div className="autofill-header">
-        <h2 className="autofill-title">App (SDK)</h2>
+        <h2 className="autofill-title">Meta Business</h2>
         <button className="autofill-close" onClick={onClose}>×</button>
       </div>
 

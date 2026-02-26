@@ -1,3 +1,6 @@
+import template1Thumb from '../assets/images/template-1.png'
+import template2Thumb from '../assets/images/template-2.png'
+
 // Sample data for the Autofill prototype
 
 export const PERSONAS = [
@@ -30,51 +33,46 @@ export const DATA_SOURCES = [
 ]
 
 export const SCHEMA = {
-  id: 'benefits-hris',
-  name: 'Benefits HRIS One Digital',
+  id: 'meta-catalogue',
+  name: 'Meta Catalogue',
   fields: [
-    { id: 'company-name', label: 'Company name', type: 'text', sampleValue: 'Acme Corporation' },
-    { id: 'employee-type', label: 'Employee type', type: 'text', sampleValue: 'Full-time' },
-    { id: 'employee-id', label: 'Employee id', type: 'text', sampleValue: 'EMP-4821' },
-    { id: 'job-type', label: 'Job type', type: 'text', sampleValue: 'Salaried' },
-    { id: 'job-title', label: 'Job title', type: 'text', sampleValue: 'Senior Engineer' },
-    { id: 'department', label: 'Department', type: 'text', sampleValue: 'Engineering' },
-    { id: 'start-date', label: 'Start date', type: 'text', sampleValue: 'Jan 15, 2024' },
-    { id: 'manager-name', label: 'Manager name', type: 'text', sampleValue: 'Sarah Chen' },
-    { id: 'office-location', label: 'Office location', type: 'text', sampleValue: 'New York, NY' },
-    { id: 'employee-count', label: 'Employee count', type: 'text', sampleValue: '2,450' },
+    { id: 'product-name', label: 'Product name', type: 'text', sampleValue: 'Nike Air Zoom Trail' },
+    { id: 'product-brand', label: 'Brand', type: 'text', sampleValue: 'Nike' },
+    { id: 'product-price', label: 'Price', type: 'text', sampleValue: '$129.99' },
+    { id: 'sale-price', label: 'Sale price', type: 'text', sampleValue: '$89.99' },
+    { id: 'discount-percent', label: 'Discount %', type: 'text', sampleValue: '30%' },
+    { id: 'product-category', label: 'Category', type: 'text', sampleValue: 'Running Shoes' },
+    { id: 'product-description', label: 'Description', type: 'text', sampleValue: 'Lightweight trail running shoe with responsive cushioning' },
+    { id: 'promo-label', label: 'Promo label', type: 'text', sampleValue: 'SALE' },
+    { id: 'cta-text', label: 'CTA text', type: 'text', sampleValue: 'Shop Now' },
+    { id: 'product-sku', label: 'SKU', type: 'text', sampleValue: 'NK-AZT-4821' },
   ],
   media: [
-    { id: 'hero-photo', label: 'Hero photo', type: 'image', sampleValue: 'hero-001.jpg' },
-    { id: 'company-logo', label: 'Company logo', type: 'image', sampleValue: 'logo.png' },
-    { id: 'team-photo', label: 'Team photo', type: 'image', sampleValue: 'team-2024.jpg' },
+    { id: 'product-image', label: 'Product image', type: 'image', sampleValue: 'product-001.jpg' },
+    { id: 'brand-logo', label: 'Brand logo', type: 'image', sampleValue: 'brand-logo.png' },
+    { id: 'lifestyle-image', label: 'Lifestyle image', type: 'image', sampleValue: 'lifestyle-001.jpg' },
   ],
   tables: [
-    { 
-      id: 'contact-info', 
-      label: 'Contact information',
-      columns: ['Benefit Type', 'Provider', 'Contact'],
+    {
+      id: 'product-variants',
+      label: 'Product variants',
+      columns: ['Size', 'Color', 'Stock'],
       rows: [
-        ['Medical Insurance', 'BlueCross BlueShield', '1-800-262-2583'],
-        ['Health Savings Account (HSA)', 'HealthEquity', '1-866-346-5800'],
-        ['Health Reimbursement Arrangement (HRA)', 'WageWorks', '1-877-924-3967'],
-        ['Flexible Spending Accounts (FSAs)', 'WageWorks', '1-877-924-3967'],
-        ['Employee Assistance Program (EAP)', 'ComPsych', '1-800-497-9133'],
-        ['Dental Insurance', 'Delta Dental', '1-800-765-6003'],
-        ['Vision Insurance', 'VSP Vision Care', '1-800-877-7195'],
-        ['Life and AD&D Insurance', 'MetLife Group', '1-800-638-5433'],
-        ['Disability Insurance', 'MetLife Group', '1-800-638-5433'],
-        ['401(k) Retirement Savings', 'Fidelity', '1-800-343-3548'],
-        ['Family Support', 'Bright Horizons', '1-877-242-2737'],
+        ['US 8', 'Blue/Red', '24'],
+        ['US 9', 'Blue/Red', '18'],
+        ['US 10', 'Blue/Red', '31'],
+        ['US 11', 'Blue/Red', '12'],
+        ['US 8', 'Black/White', '22'],
+        ['US 9', 'Black/White', '15'],
       ]
     },
-    { 
-      id: 'benefits-summary', 
-      label: 'Benefits summary',
-      columns: ['Benefit', 'Provider', 'Details'],
+    {
+      id: 'pricing-tiers',
+      label: 'Pricing tiers',
+      columns: ['Region', 'Currency', 'Price'],
       rows: [
-        ['Medical', 'BlueCross', 'PPO Plan'],
-        ['Dental', 'Delta', 'Basic Coverage'],
+        ['US', 'USD', '$89.99'],
+        ['EU', 'EUR', '€82.99'],
       ]
     },
   ]
@@ -301,70 +299,44 @@ export const TEMPLATES = [
   },
   {
     id: 'template-7',
-    title: 'Onboarding Checklist',
-    type: 'Multi-page PDF',
-    category: 'onboarding',
+    title: 'Product Sale Ad',
+    type: 'Social media post',
+    category: 'product-ad',
     isMapped: false,
-    thumbnail: '/images/templates/benefits-guide5.png',
+    thumbnail: template1Thumb,
     bgColor: '#F6F7F8',
     pages: [
       {
         id: 't7-page-1',
-        title: 'Cover',
+        title: 'Ad Creative',
         elements: [
-          { id: 't7-el-1', type: 'text', label: 'ABC Company', mappedField: null },
-          { id: 't7-el-2', type: 'text', label: 'For xx employees', mappedField: null },
-          { id: 't7-el-3', type: 'image', label: 'Hero Image', mappedField: null },
-        ]
-      },
-      {
-        id: 't7-page-2',
-        title: 'Overview',
-        elements: [
-          { id: 't7-el-4', type: 'text', label: 'Department Name', mappedField: null },
-          { id: 't7-el-5', type: 'text', label: 'Start Date', mappedField: null },
-        ]
-      },
-      {
-        id: 't7-page-3',
-        title: 'Contact',
-        elements: [
-          { id: 't7-el-6', type: 'table', label: 'Contact Information', mappedField: null },
+          { id: 't7-el-1', type: 'text', label: 'Product Name', mappedField: null },
+          { id: 't7-el-2', type: 'text', label: 'Promo Label', mappedField: null },
+          { id: 't7-el-3', type: 'text', label: 'Discount %', mappedField: null },
+          { id: 't7-el-4', type: 'image', label: 'Product Image', mappedField: null },
+          { id: 't7-el-5', type: 'text', label: 'CTA Text', mappedField: null },
         ]
       }
     ]
   },
   {
     id: 'template-8',
-    title: 'Training Manual',
-    type: 'Multi-page PDF',
-    category: 'training',
+    title: 'Workplace Campaign',
+    type: 'Social media story',
+    category: 'product-ad',
     isMapped: false,
-    thumbnail: '/images/templates/benefits-guide6.png',
+    thumbnail: template2Thumb,
     bgColor: '#F6F7F8',
     pages: [
       {
         id: 't8-page-1',
-        title: 'Cover',
+        title: 'Ad Creative',
         elements: [
-          { id: 't8-el-1', type: 'text', label: 'ABC Company', mappedField: null },
-          { id: 't8-el-2', type: 'text', label: 'For xx employees', mappedField: null },
-          { id: 't8-el-3', type: 'image', label: 'Hero Image', mappedField: null },
-        ]
-      },
-      {
-        id: 't8-page-2',
-        title: 'Overview',
-        elements: [
-          { id: 't8-el-4', type: 'text', label: 'Department Name', mappedField: null },
-          { id: 't8-el-5', type: 'text', label: 'Start Date', mappedField: null },
-        ]
-      },
-      {
-        id: 't8-page-3',
-        title: 'Contact',
-        elements: [
-          { id: 't8-el-6', type: 'table', label: 'Contact Information', mappedField: null },
+          { id: 't8-el-1', type: 'text', label: 'Product Name', mappedField: null },
+          { id: 't8-el-2', type: 'text', label: 'Brand', mappedField: null },
+          { id: 't8-el-3', type: 'text', label: 'Description', mappedField: null },
+          { id: 't8-el-4', type: 'image', label: 'Lifestyle Image', mappedField: null },
+          { id: 't8-el-5', type: 'text', label: 'CTA Text', mappedField: null },
         ]
       }
     ]

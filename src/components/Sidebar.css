@@ -18,7 +18,7 @@
   width: 40px;
   height: 40px;
   border-radius: 9999px;
-  background: #f0f1f5;
+  background: white;
   border: none;
   cursor: pointer;
   display: flex;
@@ -28,14 +28,14 @@
   position: relative;
   padding: 0;
   margin-top: 12px;
+  box-shadow: var(--shadow-sm);
 }
 
 .canva-ai-icon:hover {
-  background: #e8e9ed;
+  box-shadow: var(--shadow-md);
 }
 
 .canva-ai-icon.active {
-  background: white;
   box-shadow: 
     0px 0px 0px 0.5px rgba(64, 87, 109, 0.07),
     0px 2px 4px 0px rgba(24, 44, 89, 0.14),

@@ -43,28 +43,24 @@ export default function MappingIntentPanel({
       // Simulate auto-mapping fields across all pages
       // Map ALL fields EXCEPT 'Company name' (el-1) so user can demo drag & drop
       if (onFieldMap) {
-        // Define AI mapping rules (simulating what AI would detect)
-        // Intentionally EXCLUDING 'ABC Company' -> 'company-name' mapping
         const aiMappingRules = {
-          'For xx employees': 'employee-count',
-          'Department': 'department',
-          'Start Date': 'start-date',
-          'Hero Image': 'hero-photo',
-          'Company Logo': 'company-logo',
-          'Team Photo': 'team-photo',
-          'Contact Information': 'contact-info',
-          'Job Type': 'job-type',
-          'Job Title': 'job-title',
-          'Manager Name': 'manager-name',
-          'Office Location': 'office-location',
-          'Employee Type': 'employee-type',
-          'Employee ID': 'employee-id',
+          'Product Name': 'product-name',
+          'Promo Label': 'promo-label',
+          'Discount': 'discount-percent',
+          'Product Image': 'product-image',
+          'CTA': 'cta-text',
+          'Brand': 'product-brand',
+          'Price': 'product-price',
+          'Sale Price': 'sale-price',
+          'Description': 'product-description',
+          'Category': 'product-category',
+          'Lifestyle': 'lifestyle-image',
+          'Logo': 'brand-logo',
         }
         
         template.pages.forEach(page => {
           page.elements.forEach(el => {
-            // Skip the 'ABC Company' element (el-1) to leave it unmapped for demo
-            if (el.id === 'el-1') return
+            if (el.label === 'Product Name') return
             
             if (!mappings[el.id]) {
               // Try to find a matching rule

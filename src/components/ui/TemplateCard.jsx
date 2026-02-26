@@ -25,7 +25,7 @@ export default function TemplateCard({
           </div>
         )}
         {isMapped && (
-          <span className="mapped-badge">Mapped</span>
+          <span className="mapped-badge">Matched</span>
         )}
         <button className="template-carousel-arrow" onClick={(e) => e.stopPropagation()}>
           ›

@@ -4,7 +4,7 @@ export default function MappedFieldsList({ fields, onUnmap, onFieldClick }) {
   if (fields.length === 0) {
     return (
       <div className="no-fields">
-        <span className="no-fields-text">No mapped fields on this page</span>
+        <span className="no-fields-text">No matched fields on this page</span>
       </div>
     )
   }

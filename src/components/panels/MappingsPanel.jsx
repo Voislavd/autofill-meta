@@ -1,11 +1,26 @@
-import { useState } from 'react'
+import { useState, useEffect } from 'react'
 import PageThumbnailStrip from '../autofill/PageThumbnailStrip'
-import MappingTools from '../autofill/MappingTools'
+import AIAssistMappingCard from './canva-ai/AIAssistMappingCard'
 import FieldsSchemaSection from '../autofill/FieldsSchemaSection'
 import FieldListView from '../autofill/FieldListView'
 import AllMappingsView from '../autofill/AllMappingsView'
 import MappedFieldsList from '../autofill/MappedFieldsList'
 import { SCHEMA } from '../../data/sampleData'
+
+const AI_MAPPING_RULES = {
+  'Product Name': 'product-name',
+  'Promo Label': 'promo-label',
+  'Discount': 'discount-percent',
+  'Product Image': 'product-image',
+  'CTA': 'cta-text',
+  'Brand': 'product-brand',
+  'Price': 'product-price',
+  'Sale Price': 'sale-price',
+  'Description': 'product-description',
+  'Category': 'product-category',
+  'Lifestyle': 'lifestyle-image',
+  'Logo': 'brand-logo',
+}
 
 export default function MappingsPanel({
   template,
@@ -25,6 +40,32 @@ export default function MappingsPanel({
   // Sub-view state: 'overview', 'field-list', 'all-mappings'
   const [subView, setSubView] = useState('overview')
   const [selectedCategory, setSelectedCategory] = useState(null)
+  const [aiMappingState, setAiMappingState] = useState('analyzing')
+
+  // Auto-trigger AI matching on mount
+  useEffect(() => {
+    if (!template || !onFieldMap) return
+
+    const timer = setTimeout(() => {
+      setAiMappingState('complete')
+
+      template.pages.forEach(page => {
+        page.elements.forEach(el => {
+          if (el.label === 'Product Name') return
+          if (!mappings[el.id]) {
+            for (const [labelPattern, fieldId] of Object.entries(AI_MAPPING_RULES)) {
+              if (el.label && el.label.toLowerCase().includes(labelPattern.toLowerCase())) {
+                onFieldMap(el.id, fieldId)
+                break
+              }
+            }
+          }
+        })
+      })
+    }, 5000)
+
+    return () => clearTimeout(timer)
+  }, []) // eslint-disable-line react-hooks/exhaustive-deps
 
   if (!template) return null
 
@@ -106,19 +147,32 @@ export default function MappingsPanel({
         <button className="autofill-close" onClick={onClose}>×</button>
       </div>
 
-      {/* Page Thumbnails */}
-      <PageThumbnailStrip
-        pages={template.pages}
-        selectedIndex={selectedPageIndex}
-        onPageSelect={onPageSelect}
-        mappings={mappings}
-      />
+      {/* Page Thumbnails - only show for multi-page templates */}
+      {template.pages.length > 1 && (
+        <PageThumbnailStrip
+          pages={template.pages}
+          selectedIndex={selectedPageIndex}
+          onPageSelect={onPageSelect}
+          mappings={mappings}
+        />
+      )}
 
-      {/* Mapping Tools */}
-      <MappingTools
-        isClickToMapMode={isClickToMapMode}
-        onToggleClickToMap={onToggleClickToMap}
-      />
+      {/* Matching Tools */}
+      <div className="mapping-tools">
+        <h4 className="section-label">Matching tools</h4>
+        <AIAssistMappingCard
+          state={aiMappingState}
+          onMapWithAI={() => {}}
+          onCancel={() => setAiMappingState('idle')}
+        />
+        <button
+          className={`mapping-tool-btn click-btn ${isClickToMapMode ? 'active' : ''}`}
+          onClick={onToggleClickToMap}
+        >
+          <span className="tool-icon">⎋</span>
+          Click to match
+        </button>
+      </div>
 
       {/* Show Fields & Schema when not in click-to-map mode */}
       {!isClickToMapMode && (

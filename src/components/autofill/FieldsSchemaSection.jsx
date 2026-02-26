@@ -9,11 +9,10 @@ import tableIcon from '../../assets/icons/table-icon.png'
 import chevronDown from '../../assets/icons/chevron-down.png'
 import chevronRight from '../../assets/icons/chevron-right.png'
 
-// Mock data sources
 const DATA_SOURCES = [
-  { id: 'benefits-hris', name: 'Benefits HRIS One Digital' },
-  { id: 'employee-db', name: 'Employee Database' },
-  { id: 'payroll-system', name: 'Payroll System' }
+  { id: 'meta-catalogue', name: 'Meta Catalogue' },
+  { id: 'canva-sheets', name: 'Canva Sheets' },
+  { id: 'manual-upload', name: 'Manual Upload' }
 ]
 
 export default function FieldsSchemaSection({ 
@@ -124,10 +123,10 @@ export default function FieldsSchemaSection({
           {fieldsUnmapped > 0 ? (
             <>
               <span className="count-dot"></span>
-              {fieldsUnmapped} unmapped
+              {fieldsUnmapped} unmatched
             </>
           ) : (
-            '✓ All mapped'
+            '✓ All matched'
           )}
         </span>
         <span className="category-chevron">
@@ -148,10 +147,10 @@ export default function FieldsSchemaSection({
           {mediaUnmapped > 0 ? (
             <>
               <span className="count-dot"></span>
-              {mediaUnmapped} unmapped
+              {mediaUnmapped} unmatched
             </>
           ) : (
-            '✓ All mapped'
+            '✓ All matched'
           )}
         </span>
         <span className="category-chevron">
@@ -172,10 +171,10 @@ export default function FieldsSchemaSection({
           {tablesUnmapped > 0 ? (
             <>
               <span className="count-dot"></span>
-              {tablesUnmapped} unmapped
+              {tablesUnmapped} unmatched
             </>
           ) : (
-            '✓ All mapped'
+            '✓ All matched'
           )}
         </span>
         <span className="category-chevron">
