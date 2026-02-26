@@ -1,16 +1,20 @@
 import { useState, useRef, useEffect } from 'react'
+import chevronDown from '../../assets/icons/chevron-down.png'
 import './Dropdown.css'
 
 export default function Dropdown({ 
-  trigger, 
   items, 
+  value,
   onSelect, 
   chipStyle = false,
   fullWidth = false 
 }) {
   const [isOpen, setIsOpen] = useState(false)
-  const [selected, setSelected] = useState(items[0]?.value)
+  const [internalValue, setInternalValue] = useState(items[0]?.value)
   const dropdownRef = useRef(null)
+
+  const selected = value !== undefined ? value : internalValue
+  const selectedLabel = items.find(i => i.value === selected)?.label || items[0]?.label
 
   useEffect(() => {
     const handleClickOutside = (e) => {
@@ -23,7 +27,9 @@ export default function Dropdown({
   }, [])
 
   const handleSelect = (item) => {
-    setSelected(item.value)
+    if (value === undefined) {
+      setInternalValue(item.value)
+    }
     setIsOpen(false)
     onSelect?.(item)
   }
@@ -37,7 +43,8 @@ export default function Dropdown({
         className={`dropdown-trigger ${chipStyle ? 'chip-style' : ''}`}
         onClick={() => setIsOpen(!isOpen)}
       >
-        {trigger}
+        <span className="dropdown-trigger-label">{selectedLabel}</span>
+        <img src={chevronDown} alt="" className="dropdown-arrow" />
       </button>
       <div className="dropdown-menu">
         {items.map((item) => (
@@ -54,4 +61,3 @@ export default function Dropdown({
     </div>
   )
 }
-

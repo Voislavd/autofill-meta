@@ -1,6 +1,6 @@
 import { useState, useMemo } from 'react'
 import { DATA_SOURCES, SCHEMA, CATALOGUE_FILTERS } from '../../data/sampleData'
-import chevronDown from '../../assets/icons/chevron-down.png'
+import Dropdown from '../ui/Dropdown'
 import './panels.css'
 
 export default function CreateConnector({
@@ -12,6 +12,7 @@ export default function CreateConnector({
   onBack,
   onClose
 }) {
+  const [selectedSource, setSelectedSource] = useState(DATA_SOURCES.filter(s => s.connected)[0]?.id)
   const [selectedDateRange, setSelectedDateRange] = useState('last-7')
   const [selectedCategory, setSelectedCategory] = useState('all')
   const [selectedStatus, setSelectedStatus] = useState('new')
@@ -64,6 +65,11 @@ export default function CreateConnector({
     return Math.min(dateCount, catCount, statusCount)
   }, [selectedDateRange, selectedCategory, selectedStatus])
 
+  const sourceItems = connectedSources.map(s => ({ value: s.id, label: s.name }))
+  const dateItems = CATALOGUE_FILTERS.dateRange.map(f => ({ value: f.id, label: f.label }))
+  const categoryItems = CATALOGUE_FILTERS.category.map(f => ({ value: f.id, label: f.label }))
+  const statusItems = CATALOGUE_FILTERS.status.map(f => ({ value: f.id, label: f.label }))
+
   return (
     <div className="create-connector">
       {/* Header */}
@@ -80,66 +86,36 @@ export default function CreateConnector({
       {/* Data Source Dropdown */}
       <div className="connector-section">
         <label className="section-label">Data source</label>
-        <div className="data-source-dropdown">
-          <select className="data-source-select" defaultValue={connectedSources[0]?.id}>
-            {connectedSources.map(source => (
-              <option key={source.id} value={source.id}>
-                {source.name}
-              </option>
-            ))}
-          </select>
-          <img src={chevronDown} alt="" className="dropdown-chevron-icon" />
-        </div>
+        <Dropdown
+          items={sourceItems}
+          value={selectedSource}
+          onSelect={(item) => setSelectedSource(item.value)}
+          fullWidth
+        />
       </div>
 
       {/* Filters */}
       <div className="connector-section">
         <label className="section-label">Filters</label>
         <div className="connector-filters">
-          <div className="filter-dropdown">
-            <select
-              className="filter-select"
-              value={selectedDateRange}
-              onChange={(e) => setSelectedDateRange(e.target.value)}
-            >
-              {CATALOGUE_FILTERS.dateRange.map(opt => (
-                <option key={opt.id} value={opt.id}>
-                  {opt.label}
-                </option>
-              ))}
-            </select>
-            <img src={chevronDown} alt="" className="dropdown-chevron-icon" />
-          </div>
-
-          <div className="filter-dropdown">
-            <select
-              className="filter-select"
-              value={selectedCategory}
-              onChange={(e) => setSelectedCategory(e.target.value)}
-            >
-              {CATALOGUE_FILTERS.category.map(opt => (
-                <option key={opt.id} value={opt.id}>
-                  {opt.label}
-                </option>
-              ))}
-            </select>
-            <img src={chevronDown} alt="" className="dropdown-chevron-icon" />
-          </div>
-
-          <div className="filter-dropdown">
-            <select
-              className="filter-select"
-              value={selectedStatus}
-              onChange={(e) => setSelectedStatus(e.target.value)}
-            >
-              {CATALOGUE_FILTERS.status.map(opt => (
-                <option key={opt.id} value={opt.id}>
-                  {opt.label}
-                </option>
-              ))}
-            </select>
-            <img src={chevronDown} alt="" className="dropdown-chevron-icon" />
-          </div>
+          <Dropdown
+            items={dateItems}
+            value={selectedDateRange}
+            onSelect={(item) => setSelectedDateRange(item.value)}
+            fullWidth
+          />
+          <Dropdown
+            items={categoryItems}
+            value={selectedCategory}
+            onSelect={(item) => setSelectedCategory(item.value)}
+            fullWidth
+          />
+          <Dropdown
+            items={statusItems}
+            value={selectedStatus}
+            onSelect={(item) => setSelectedStatus(item.value)}
+            fullWidth
+          />
         </div>
 
         <div className="record-count">
