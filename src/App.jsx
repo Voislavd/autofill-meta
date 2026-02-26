@@ -183,6 +183,8 @@ export default function App() {
             onFieldHighlight={handleFieldHighlight}
             isApplied={isApplied}
             onApply={handleApply}
+            onFieldDragStart={() => setIsDraggingField(true)}
+            onFieldDragEnd={() => setIsDraggingField(false)}
           />
         ) : null}
       </ObjectPanel>

@@ -25,7 +25,9 @@ export default function AutofillPanel({
   onFieldUnmap,
   onFieldHighlight,
   isApplied,
-  onApply
+  onApply,
+  onFieldDragStart,
+  onFieldDragEnd
 }) {
   // Local navigation stack for back button
   const [navigationStack, setNavigationStack] = useState([])
@@ -86,11 +88,10 @@ export default function AutofillPanel({
     navigateTo('mappings')
   }
 
-  // Save mappings → go to map-template with Mapped tab
+  // Save mappings → show the matched template detail
   const handleSaveMappings = () => {
-    setMapTemplateInitialTab('mapped')
-    setNavigationStack([]) // Clear navigation stack
-    onViewChange('map-template')
+    setNavigationStack(['home', 'map-template'])
+    onViewChange('mapped-detail')
   }
 
   // Render current view
@@ -147,6 +148,10 @@ export default function AutofillPanel({
             onEditMappings={handleEditFromMappedDetail}
             onBack={goBack}
             onClose={onClose}
+            onDone={() => {
+              setNavigationStack([])
+              onViewChange('home')
+            }}
           />
         )
 
@@ -166,6 +171,8 @@ export default function AutofillPanel({
             onBack={goBack}
             onClose={onClose}
             onSave={handleSaveMappings}
+            onFieldDragStart={onFieldDragStart}
+            onFieldDragEnd={onFieldDragEnd}
           />
         )
 

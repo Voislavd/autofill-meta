@@ -35,7 +35,9 @@ export default function MappingsPanel({
   schema,
   onBack,
   onClose,
-  onSave
+  onSave,
+  onFieldDragStart,
+  onFieldDragEnd
 }) {
   // Sub-view state: 'overview', 'field-list', 'all-mappings'
   const [subView, setSubView] = useState('overview')
@@ -114,6 +116,13 @@ export default function MappingsPanel({
           mappings={mappings}
           template={template}
           onBack={handleSubViewBack}
+          onFieldDragStart={onFieldDragStart}
+          onFieldDragEnd={onFieldDragEnd}
+          onDisconnect={(item, mappingInfo) => {
+            if (mappingInfo?.elementId) {
+              onFieldUnmap?.(mappingInfo.elementId)
+            }
+          }}
         />
       </div>
     )

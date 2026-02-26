@@ -6,7 +6,8 @@ export default function MappedTemplateDetail({
   mappings,
   onEditMappings,
   onBack,
-  onClose
+  onClose,
+  onDone
 }) {
   if (!template) return null
 
@@ -110,6 +111,11 @@ export default function MappedTemplateDetail({
       {/* Edit Button */}
       <button className="edit-mappings-btn" onClick={onEditMappings}>
         Edit matching
+      </button>
+
+      {/* Done Button */}
+      <button className="save-mappings-btn" onClick={onDone}>
+        Done
       </button>
     </div>
   )
