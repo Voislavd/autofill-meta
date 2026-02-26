@@ -827,22 +827,24 @@
 }
 
 .edit-mappings-btn {
-  padding: 14px;
-  background: transparent;
-  border: 1px solid #e0e0e0;
+  height: 40px;
+  padding: 0 24px;
+  background: white;
+  border: 1px solid #d0d0d0;
   border-radius: 12px;
-  font-size: 14px;
-  font-weight: 500;
-  color: var(--text-primary);
+  color: var(--action-secondary-fg, #0F1015);
+  font-family: var(--fontFamily-sans, "Canva Sans");
+  font-size: var(--body-medium-fontSize, 14px);
+  font-weight: var(--fontWeight-500, 500);
+  line-height: var(--lineHeight-fixed-22, 22px);
   cursor: pointer;
-  transition: all 0.15s ease;
+  transition: none;
   margin-top: auto;
 }
 
 .edit-mappings-btn:hover {
-  border-color: var(--purple-accent);
-  color: var(--purple-accent);
-  background: #faf8ff;
+  background: #f5f5f5;
+  border-color: #bbb;
 }
 
 /* Prompt Input - Full version */
@@ -982,7 +984,7 @@
 }
 
 .mapping-tools .section-label {
-  margin-bottom: 8px;
+  margin: 0 0 8px 0;
 }
 
 .mapped-fields-section .section-label {
@@ -1278,19 +1280,24 @@
   align-items: center;
   justify-content: center;
   gap: 8px;
-  padding: 12px;
-  border: 1px solid #e0e0e0;
-  border-radius: var(--radius-md);
+  height: 40px;
+  padding: 0 24px;
+  border: 1px solid #d0d0d0;
+  border-radius: 12px;
   background: white;
-  font-size: 14px;
-  color: var(--text-primary);
+  color: var(--action-secondary-fg, #0F1015);
+  font-family: var(--fontFamily-sans, "Canva Sans");
+  font-size: var(--body-medium-fontSize, 14px);
+  font-weight: var(--fontWeight-500, 500);
+  line-height: var(--lineHeight-fixed-22, 22px);
   cursor: pointer;
-  transition: all 0.15s ease;
+  transition: none;
   margin-top: auto;
 }
 
 .map-template-btn:hover {
-  border-color: #ccc;
+  background: #f5f5f5;
+  border-color: #bbb;
   background: #fafafa;
 }
 
@@ -1355,6 +1362,10 @@
   flex-direction: column;
   gap: 16px;
   height: 100%;
+}
+
+.mappings-panel .mapping-tools {
+  margin-top: -16px;
 }
 
 .mapped-fields-section {
@@ -1484,24 +1495,24 @@
   justify-content: center;
   gap: 6px;
   width: 100%;
-  padding: 10px 16px;
-  border: 1px solid #e0e0e0;
-  border-radius: var(--radius-md);
+  height: 40px;
+  padding: 0 24px;
+  border: 1px solid #d0d0d0;
+  border-radius: 12px;
   background: white;
   color: var(--action-secondary-fg, #0F1015);
   text-align: center;
   font-family: var(--fontFamily-sans, "Canva Sans");
   font-size: var(--body-medium-fontSize, 14px);
-  font-style: normal;
-  font-weight: var(--fontWeight-600, 600);
+  font-weight: var(--fontWeight-500, 500);
   line-height: var(--lineHeight-fixed-22, 22px);
   cursor: pointer;
-  transition: all 0.15s ease;
+  transition: none;
 }
 
 .add-source-btn:hover {
   background: #f5f5f5;
-  border-color: #ccc;
+  border-color: #bbb;
 }
 
 /* Marketer Preview Panel */
@@ -1611,20 +1622,21 @@
   align-items: center;
   justify-content: center;
   gap: 8px;
-  padding: 14px;
-  background: var(--purple-accent);
+  height: 40px;
+  padding: 0 24px;
+  background: linear-gradient(135deg, #8b3dff 0%, #6b24d9 100%);
   color: white;
   border: none;
-  border-radius: var(--radius-md);
-  font-size: 15px;
+  border-radius: 12px;
+  font-size: 14px;
   font-weight: 600;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: none;
   margin-top: auto;
 }
 
 .generate-btn:hover:not(:disabled) {
-  background: #7c35e0;
+  background: #7630D7;
 }
 
 .generate-btn:disabled {
@@ -1657,21 +1669,20 @@
 
 .save-mappings-btn {
   width: 100%;
-  padding: 14px 24px;
+  height: 40px;
+  padding: 0 24px;
   background: linear-gradient(135deg, #8b3dff 0%, #6b24d9 100%);
   color: white;
   border: none;
   border-radius: 12px;
-  font-size: 15px;
+  font-size: 14px;
   font-weight: 600;
   cursor: pointer;
-  transition: all 0.2s ease;
+  transition: none;
 }
 
 .save-mappings-btn:hover {
-  background: linear-gradient(135deg, #9b4dff 0%, #7b34e9 100%);
-  transform: translateY(-1px);
-  box-shadow: 0 4px 12px rgba(139, 61, 255, 0.3);
+  background: #7630D7;
 }
 
 /* ==================== META UPLOAD PANEL ==================== */

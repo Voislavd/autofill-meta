@@ -174,43 +174,26 @@ export default function MappingsPanel({
           onMapWithAI={() => {}}
           onCancel={() => setAiMappingState('idle')}
         />
-        <button
-          className={`mapping-tool-btn click-btn ${isClickToMapMode ? 'active' : ''}`}
-          onClick={onToggleClickToMap}
-        >
-          <span className="tool-icon">⎋</span>
-          Click to match
-        </button>
       </div>
 
-      {/* Show Fields & Schema when not in click-to-map mode */}
-      {!isClickToMapMode && (
-        <FieldsSchemaSection
-          schema={schema}
-          mappings={mappings}
-          template={template}
-          onCategoryClick={handleCategoryClick}
-          onViewAllClick={handleViewAllClick}
-        />
-      )}
+      <FieldsSchemaSection
+        schema={schema}
+        mappings={mappings}
+        template={template}
+        onCategoryClick={handleCategoryClick}
+        onViewAllClick={handleViewAllClick}
+      />
 
-      {/* Show Mapped Fields when in click-to-map mode */}
-      {isClickToMapMode && (
+      {/* Show Mapped Fields when fields are mapped */}
+      {mappedFields.length > 0 && (
         <div className="mapped-fields-section">
           <h4 className="section-label">Matched fields (Page {selectedPageIndex + 1})</h4>
 
-          {mappedFields.length === 0 ? (
-            <div className="click-to-map-hint">
-              <span className="info-icon">ℹ</span>
-              <span>Click on an element to match it</span>
-            </div>
-          ) : (
-            <MappedFieldsList
-              fields={mappedFields}
-              onUnmap={onFieldUnmap}
-              onFieldClick={onFieldHighlight}
-            />
-          )}
+          <MappedFieldsList
+            fields={mappedFields}
+            onUnmap={onFieldUnmap}
+            onFieldClick={onFieldHighlight}
+          />
         </div>
       )}
 
