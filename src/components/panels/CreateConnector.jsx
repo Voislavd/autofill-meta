@@ -1,6 +1,7 @@
 import { useState, useMemo } from 'react'
-import { DATA_SOURCES, SCHEMA, CATALOGUE_FILTERS } from '../../data/sampleData'
+import { SCHEMA, CATALOGUE_FILTERS } from '../../data/sampleData'
 import Dropdown from '../ui/Dropdown'
+import databaseIcon from '../../assets/icons/icon-database.png'
 import textFieldIcon from '../../assets/icons/text-field-icon.png'
 import mediaIcon from '../../assets/icons/media-icon.png'
 import tableIcon from '../../assets/icons/table-icon.png'
@@ -17,12 +18,9 @@ export default function CreateConnector({
   onClose,
   onUploadToMeta
 }) {
-  const [selectedSource, setSelectedSource] = useState(DATA_SOURCES.filter(s => s.connected)[0]?.id)
   const [selectedDateRange, setSelectedDateRange] = useState('last-7')
   const [selectedCategory, setSelectedCategory] = useState('all')
   const [selectedStatus, setSelectedStatus] = useState('new')
-
-  const connectedSources = DATA_SOURCES.filter(s => s.connected)
 
   const getMappedItems = () => {
     if (!template || !mappings) return []
@@ -70,7 +68,6 @@ export default function CreateConnector({
     return Math.min(dateCount, catCount, statusCount)
   }, [selectedDateRange, selectedCategory, selectedStatus])
 
-  const sourceItems = connectedSources.map(s => ({ value: s.id, label: s.name }))
   const dateItems = CATALOGUE_FILTERS.dateRange.map(f => ({ value: f.id, label: f.label }))
   const categoryItems = CATALOGUE_FILTERS.category.map(f => ({ value: f.id, label: f.label }))
   const statusItems = CATALOGUE_FILTERS.status.map(f => ({ value: f.id, label: f.label }))
@@ -88,15 +85,13 @@ export default function CreateConnector({
         <button className="autofill-close" onClick={onClose}>×</button>
       </div>
 
-      {/* Data Source Dropdown */}
+      {/* Data Source — static, single connector */}
       <div className="connector-section">
         <label className="section-label">Data source</label>
-        <Dropdown
-          items={sourceItems}
-          value={selectedSource}
-          onSelect={(item) => setSelectedSource(item.value)}
-          fullWidth
-        />
+        <div className="connector-source-static">
+          <img src={databaseIcon} alt="" className="connector-source-icon" />
+          <span className="connector-source-name">{SCHEMA.name}</span>
+        </div>
       </div>
 
       {/* Filters */}

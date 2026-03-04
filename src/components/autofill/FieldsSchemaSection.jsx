@@ -1,19 +1,10 @@
-import { useState, useRef, useEffect } from 'react'
 import './autofill.css'
 
-// Import icons
 import databaseIcon from '../../assets/icons/icon-database.png'
 import textFieldIcon from '../../assets/icons/text-field-icon.png'
 import mediaIcon from '../../assets/icons/media-icon.png'
 import tableIcon from '../../assets/icons/table-icon.png'
-import chevronDown from '../../assets/icons/chevron-down.png'
 import chevronRight from '../../assets/icons/chevron-right.png'
-
-const DATA_SOURCES = [
-  { id: 'meta-catalogue', name: 'Product Catalogue' },
-  { id: 'canva-sheets', name: 'Canva Sheets' },
-  { id: 'manual-upload', name: 'Manual Upload' }
-]
 
 export default function FieldsSchemaSection({ 
   schema, 
@@ -22,24 +13,6 @@ export default function FieldsSchemaSection({
   onCategoryClick,
   onViewAllClick
 }) {
-  const [isDropdownOpen, setIsDropdownOpen] = useState(false)
-  const [selectedSourceId, setSelectedSourceId] = useState(schema.id)
-  const dropdownRef = useRef(null)
-
-  // Close dropdown when clicking outside
-  useEffect(() => {
-    const handleClickOutside = (e) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(e.target)) {
-        setIsDropdownOpen(false)
-      }
-    }
-    document.addEventListener('mousedown', handleClickOutside)
-    return () => document.removeEventListener('mousedown', handleClickOutside)
-  }, [])
-
-  const selectedSource = DATA_SOURCES.find(s => s.id === selectedSourceId) || DATA_SOURCES[0]
-
-  // Count mapped fields across all pages
   const getMappedCount = (type) => {
     const mappedFieldIds = new Set(Object.values(mappings))
     
@@ -71,43 +44,12 @@ export default function FieldsSchemaSection({
     <div className="fields-schema-section">
       <h4 className="section-label">Fields & Schema</h4>
 
-      {/* Data Source Selector */}
-      <div className="schema-source-wrapper" ref={dropdownRef}>
-        <button 
-          className={`schema-source-card ${isDropdownOpen ? 'open' : ''}`}
-          onClick={() => setIsDropdownOpen(!isDropdownOpen)}
-        >
-          <span className="source-icon">
-            <img src={databaseIcon} alt="" />
-          </span>
-          <span className="source-name">{selectedSource.name}</span>
-          <span className={`source-chevron ${isDropdownOpen ? 'open' : ''}`}>
-            <img src={chevronDown} alt="" />
-          </span>
-        </button>
-        
-        {isDropdownOpen && (
-          <div className="source-dropdown">
-            {DATA_SOURCES.map(source => (
-              <button
-                key={source.id}
-                className={`source-option ${selectedSourceId === source.id ? 'selected' : ''}`}
-                onClick={() => {
-                  setSelectedSourceId(source.id)
-                  setIsDropdownOpen(false)
-                }}
-              >
-                <span className="source-option-icon">
-                  <img src={databaseIcon} alt="" />
-                </span>
-                <span className="source-option-name">{source.name}</span>
-                {selectedSourceId === source.id && (
-                  <span className="source-option-check">✓</span>
-                )}
-              </button>
-            ))}
-          </div>
-        )}
+      {/* Data Source — static, single connector */}
+      <div className="schema-source-card static">
+        <span className="source-icon">
+          <img src={databaseIcon} alt="" />
+        </span>
+        <span className="source-name">{schema.name}</span>
       </div>
 
       {/* Fields Card */}
@@ -185,4 +127,3 @@ export default function FieldsSchemaSection({
     </div>
   )
 }
-

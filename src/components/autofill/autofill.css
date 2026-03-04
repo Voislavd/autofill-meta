@@ -848,6 +848,15 @@
   border-color: #D4C4F7;
 }
 
+.schema-source-card.static {
+  cursor: default;
+  border: 1px solid #e0e0e0;
+}
+
+.schema-source-card.static:hover {
+  border-color: #e0e0e0;
+}
+
 .schema-source-card .source-icon {
   width: 24px;
   height: 24px;
@@ -857,8 +866,8 @@
 }
 
 .schema-source-card .source-icon img {
-  width: 24px;
-  height: 24px;
+  width: 20px;
+  height: 20px;
   object-fit: contain;
 }
 

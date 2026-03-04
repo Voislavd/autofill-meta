@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { SCHEMA } from '../../data/sampleData'
-import metaIcon from '../../assets/icons/meta-icon.png'
+import databaseIcon from '../../assets/icons/icon-database.png'
 import textFieldIcon from '../../assets/icons/text-field-icon.png'
 import mediaIcon from '../../assets/icons/media-icon.png'
 import tableIcon from '../../assets/icons/table-icon.png'
@@ -29,14 +29,14 @@ export default function ConfigureSources({ onBack, onClose }) {
       {/* Connector Card */}
       <div className="your-data-connector">
         <div className="source-hero-icon">
-          <img src={metaIcon} alt="" className="source-icon-img" />
+          <img src={databaseIcon} alt="" className="source-icon-img" />
         </div>
         <div className="source-hero-content">
           <div className="source-hero-title-row">
             <span className="source-hero-title">Product Catalogue</span>
             <span className="source-hero-badge">Connected</span>
           </div>
-          <span className="source-hero-desc">Your product catalogue synced from Meta</span>
+          <span className="source-hero-desc">Your synced product catalogue</span>
         </div>
       </div>
 

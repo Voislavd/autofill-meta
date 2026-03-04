@@ -96,6 +96,12 @@ export default function AutofillPanel({
     onViewChange('home')
   }
 
+  // Save mappings → go directly to choose data (create-connect)
+  const handleSaveAndCreate = () => {
+    setNavigationStack(['home'])
+    onViewChange('create-connect')
+  }
+
   // Render current view
   const renderView = () => {
     switch (view) {
@@ -175,6 +181,7 @@ export default function AutofillPanel({
             onBack={goBack}
             onClose={onClose}
             onSave={handleSaveMappings}
+            onSaveAndCreate={handleSaveAndCreate}
             onFieldDragStart={onFieldDragStart}
             onFieldDragEnd={onFieldDragEnd}
           />

@@ -38,6 +38,7 @@ export default function MappingsPanel({
   onBack,
   onClose,
   onSave,
+  onSaveAndCreate,
   onFieldDragStart,
   onFieldDragEnd
 }) {
@@ -213,10 +214,13 @@ export default function MappingsPanel({
         )
       })()}
 
-      {/* Save Button */}
+      {/* Save Buttons */}
       <div className="mappings-save-footer">
         <button className="save-mappings-btn" onClick={onSave}>
           Save matching
+        </button>
+        <button className="save-and-create-btn" onClick={onSaveAndCreate}>
+          Save & create designs
         </button>
       </div>
     </div>
