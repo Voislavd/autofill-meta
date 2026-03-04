@@ -21,7 +21,7 @@ export default function MetaUploadPanel({ onClose, onUploaded, designCount = 8 }
     <div className="meta-upload-panel">
       <div className="meta-upload-header">
         <div className="meta-upload-header-left">
-          <span className="meta-upload-title">Meta Business</span>
+          <span className="meta-upload-title">Shoes & Co</span>
           <button className="meta-upload-more">···</button>
         </div>
         <button className="meta-upload-close" onClick={onClose}>×</button>

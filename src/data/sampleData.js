@@ -39,7 +39,7 @@ export const CLIENTS = [
 ]
 
 export const DATA_SOURCES = [
-  { id: 'meta-catalogue', name: 'Meta Catalogue', connected: true },
+  { id: 'meta-catalogue', name: 'Product Catalogue', connected: true },
   { id: 'google-sheets', name: 'Google Sheets', connected: true },
   { id: 'shopify-store', name: 'Shopify Store', connected: false }
 ]
@@ -67,7 +67,7 @@ export const CATALOGUE_FILTERS = {
 
 export const SCHEMA = {
   id: 'meta-catalogue',
-  name: 'Meta Catalogue',
+  name: 'Product Catalogue',
   fields: [
     { id: 'product-name', label: 'Product name', type: 'text', sampleValue: 'Nike Air Zoom Trail' },
     { id: 'product-brand', label: 'Brand', type: 'text', sampleValue: 'Nike' },

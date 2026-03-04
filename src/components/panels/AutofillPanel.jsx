@@ -90,10 +90,10 @@ export default function AutofillPanel({
     navigateTo('mappings')
   }
 
-  // Save mappings → show the matched template detail
+  // Save mappings → go back to home
   const handleSaveMappings = () => {
-    setNavigationStack(['home', 'map-template'])
-    onViewChange('mapped-detail')
+    setNavigationStack([])
+    onViewChange('home')
   }
 
   // Render current view

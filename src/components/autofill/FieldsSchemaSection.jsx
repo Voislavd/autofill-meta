@@ -10,7 +10,7 @@ import chevronDown from '../../assets/icons/chevron-down.png'
 import chevronRight from '../../assets/icons/chevron-right.png'
 
 const DATA_SOURCES = [
-  { id: 'meta-catalogue', name: 'Meta Catalogue' },
+  { id: 'meta-catalogue', name: 'Product Catalogue' },
   { id: 'canva-sheets', name: 'Canva Sheets' },
   { id: 'manual-upload', name: 'Manual Upload' }
 ]
